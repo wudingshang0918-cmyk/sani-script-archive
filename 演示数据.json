@@ -1,0 +1,315 @@
+{
+ "heads": [
+  {
+   "title": "念 · 字头",
+   "head": {
+    "sn": 1,
+    "page": 1,
+    "ipa": "pʰi+",
+    "gloss": "念(念彝文经书)",
+    "meanings": [
+     "念(念彝文经书)"
+    ],
+    "tags": [
+     "宗教仪式"
+    ]
+   },
+   "family": [
+    {
+     "sn": 3,
+     "page": 1,
+     "ipa": "pʰi+ dʐi+ tʰo7",
+     "gloss": "(词义截断，未显示)",
+     "meanings": [
+      "(词义截断，未显示)"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 4,
+     "page": 1,
+     "ipa": "pʰi+ fA+",
+     "gloss": "比方；譬如",
+     "meanings": [
+      "比方；譬如"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 5,
+     "page": 1,
+     "ipa": "pʰi+ fA+ dɤJ",
+     "gloss": "举例",
+     "meanings": [
+      "举例"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 6,
+     "page": 1,
+     "ipa": "pʰi+ kʰA+",
+     "gloss": "饼干",
+     "meanings": [
+      "饼干"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 7,
+     "page": 1,
+     "ipa": "pʰi+ le+",
+     "gloss": "动",
+     "meanings": [
+      "动"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 8,
+     "page": 1,
+     "ipa": "pʰi+ lɤJ",
+     "gloss": "比例",
+     "meanings": [
+      "比例"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 9,
+     "page": 1,
+     "ipa": "pʰi+ moJ",
+     "gloss": "毕摩(彝族祭师，掌握彝文、传播彝文的人)",
+     "meanings": [
+      "毕摩(彝族祭师，掌握彝文、传播彝文的人)"
+     ],
+     "tags": [
+      "宗教仪式",
+      "称谓"
+     ]
+    },
+    {
+     "sn": 10,
+     "page": 1,
+     "ipa": "pʰi+ mu+",
+     "gloss": "念经(祭祀时念经)",
+     "meanings": [
+      "念经(祭祀时念经)"
+     ],
+     "tags": [
+      "宗教仪式"
+     ]
+    },
+    {
+     "sn": 11,
+     "page": 1,
+     "ipa": "pʰi+ mɤ+ tʂ+",
+     "gloss": "扭秧歌；舞蹈",
+     "meanings": [
+      "扭秧歌；舞蹈"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 12,
+     "page": 1,
+     "ipa": "pʰi+ pɛJ",
+     "gloss": "冰棒；冰棍",
+     "meanings": [
+      "冰棒；冰棍"
+     ],
+     "tags": []
+    }
+   ],
+   "examples": [
+    "毕摩在念经。",
+    "他会念彝文经书。"
+   ],
+   "note": "全书第一个字头"
+  },
+  {
+   "title": "盖 · 字头",
+   "head": {
+    "sn": 17,
+    "page": 1,
+    "ipa": "pʰi7",
+    "gloss": "盖；覆盖；关",
+    "meanings": [
+     "盖；覆盖；关"
+    ],
+    "tags": []
+   },
+   "family": [
+    {
+     "sn": 18,
+     "page": 1,
+     "ipa": "pʰi7 lɿ7 pʰi7 lɤ+",
+     "gloss": "果实累累",
+     "meanings": [
+      "果实累累"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 19,
+     "page": 1,
+     "ipa": "pʰi7 pe+",
+     "gloss": "关上",
+     "meanings": [
+      "关上"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 20,
+     "page": 1,
+     "ipa": "pʰi7 tshiJ",
+     "gloss": "盖住；关好",
+     "meanings": [
+      "盖住；关好"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 21,
+     "page": 1,
+     "ipa": "pʰi7 tu+",
+     "gloss": "盖子(泛指)",
+     "meanings": [
+      "盖子(泛指)"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 22,
+     "page": 1,
+     "ipa": "pʰi7 tʂ+",
+     "gloss": "盖子(专指一种做饭用的盖子)",
+     "meanings": [
+      "盖子(专指一种做饭用的盖子)"
+     ],
+     "tags": [
+      "饮食"
+     ]
+    },
+    {
+     "sn": 36,
+     "page": 2,
+     "ipa": "pʰi7 be7",
+     "gloss": "花边",
+     "meanings": [
+      "花边"
+     ],
+     "tags": [
+      "植物"
+     ]
+    },
+    {
+     "sn": 37,
+     "page": 2,
+     "ipa": "pʰi7 lɿ7",
+     "gloss": "唢呐",
+     "meanings": [
+      "唢呐"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 38,
+     "page": 2,
+     "ipa": "pʰi7 pʰi7 tʰo7 tʰo7",
+     "gloss": "哭哭啼啼",
+     "meanings": [
+      "哭哭啼啼"
+     ],
+     "tags": []
+    }
+   ],
+   "examples": [
+    "把壶盖起来。",
+    "落雪覆盖山头。",
+    "把门关起来。"
+   ],
+   "note": "原书例句"
+  },
+  {
+   "title": "拉痢 · 字头",
+   "head": {
+    "sn": 42,
+    "page": 2,
+    "ipa": "pʰiJ",
+    "gloss": "拉痢",
+    "meanings": [
+     "拉痢"
+    ],
+    "tags": []
+   },
+   "family": [
+    {
+     "sn": 42,
+     "page": 2,
+     "ipa": "pʰiJ",
+     "gloss": "拉痢",
+     "meanings": [
+      "拉痢"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 43,
+     "page": 2,
+     "ipa": "pʰiJ mɤ+",
+     "gloss": "笔墨",
+     "meanings": [
+      "笔墨"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 44,
+     "page": 2,
+     "ipa": "pʰiJ neJ",
+     "gloss": "毕业",
+     "meanings": [
+      "毕业"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 45,
+     "page": 2,
+     "ipa": "pʰiJ nɿJ duJ mo+",
+     "gloss": "秃笔",
+     "meanings": [
+      "秃笔"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 46,
+     "page": 2,
+     "ipa": "pʰiJ o7",
+     "gloss": "笔尖",
+     "meanings": [
+      "笔尖"
+     ],
+     "tags": []
+    },
+    {
+     "sn": 47,
+     "page": 2,
+     "ipa": "pʰiJ pʰiJ ʐ?ɤJ ʐ?ɤJ",
+     "gloss": "单单啥啥(拉痢或强行拖人时的象声词)",
+     "meanings": [
+      "单单啥啥(拉痢或强行拖人时的象声词)"
+     ],
+     "tags": [
+      "称谓"
+     ]
+    }
+   ],
+   "examples": [],
+   "note": "含紧元音 i̠"
+  }
+ ]
+}

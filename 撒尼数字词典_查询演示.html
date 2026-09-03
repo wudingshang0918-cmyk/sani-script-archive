@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>撒尼彝文数字词典 · 查询演示</title>
+<style>
+  @font-face{font-family:"SaniYi";src:url("BabelStoneSaniYi.ttf") format("truetype");}
+  :root{
+    --red:#A61B1B; --red-d:#7A1212; --gold:#D9A441;
+    --ink:#2B2B2B; --paper:#FBF6EC; --line:#E6D9BD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+  .yi{font-family:"SaniYi","Doulos SIL",serif;}
+
+  /* Hero */
+  header{background:linear-gradient(135deg,var(--red-d),var(--red) 70%);color:#fff;padding:46px 0 34px;}
+  .brand{font-size:30px;font-weight:700;letter-spacing:2px;}
+  .brand em{font-style:normal;color:var(--gold);}
+  .tagline{margin-top:8px;font-size:15px;opacity:.92;}
+  .nums{margin-top:18px;display:flex;gap:22px;font-size:13px;opacity:.9;flex-wrap:wrap;}
+  .nums b{font-size:19px;color:var(--gold);margin-right:3px;}
+
+  /* 搜索 */
+  .searchbar{position:relative;max-width:760px;margin:-24px auto 0;background:#fff;border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.14);padding:18px 20px;display:flex;gap:10px;align-items:center;}
+  .searchbar input{flex:1;border:none;outline:none;font-size:18px;background:transparent;padding:6px 2px;font-family:inherit;}
+  .searchbar .hint{color:#b9ab8a;font-size:13px;white-space:nowrap;}
+  .chips{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:13px;color:#8a6d1f;cursor:pointer;transition:.15s;}
+  .chip:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
+  .count{text-align:center;color:#a39675;font-size:13px;margin:10px 0 2px;}
+
+  /* 结果 */
+  .results{display:flex;flex-direction:column;gap:12px;margin:16px 0 40px;}
+  .entry{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;display:flex;gap:18px;align-items:center;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+  .entry:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-1px);}
+  .entry img.thumb{width:74px;height:auto;border-radius:8px;border:1px solid #eee;flex-shrink:0;}
+  .entry .noimg{width:74px;height:52px;border-radius:8px;background:#F5EDD9;display:flex;align-items:center;justify-content:center;color:#b9ab8a;font-size:22px;flex-shrink:0;}
+  .entry .mid{flex:1;min-width:0;}
+  .entry .ipa-big{font-size:21px;font-family:"Times New Roman",serif;letter-spacing:.5px;color:var(--red-d);}
+  .entry .ipa-big .spk{font-style:normal;font-size:17px;opacity:.55;margin-left:6px;cursor:default;}
+  .entry .gloss{color:#555;font-size:14px;margin-top:2px;}
+  .entry .tags{margin-top:5px;}
+  .entry .tag{background:#F7E9D2;color:#8a6d1f;font-size:11px;border-radius:12px;padding:1px 9px;margin-right:5px;}
+  .entry .pg{color:#b9ab8a;font-size:12px;flex-shrink:0;text-align:right;}
+  .entry .pg b{color:#8a6d1f;}
+
+  /* 详情 */
+  .detail{background:#fff;border:2px solid var(--gold);border-radius:16px;padding:26px;margin:6px 0 34px;display:none;}
+  .detail.on{display:block;}
+  .d-top{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start;}
+  .d-glyph{text-align:center;}
+  .d-glyph .bigyi{font-size:120px;line-height:1;color:var(--red-d);}
+  .d-glyph .cap{font-size:12px;color:#999;margin-top:4px;}
+  .d-photo img{width:190px;border-radius:10px;border:1px solid var(--line);}
+  .d-photo .cap{font-size:12px;color:#999;margin-top:4px;text-align:center;}
+  .d-info{flex:1;min-width:250px;}
+  .d-info .row{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px dashed #EFE5CC;}
+  .d-info .lb{color:#a39675;font-size:13px;width:58px;flex-shrink:0;}
+  .d-ipa{font-size:26px;font-family:"Times New Roman",serif;color:var(--red-d);}
+  .d-ipa .spk{font-size:20px;opacity:.5;margin-left:8px;}
+  .d-gloss{font-size:16px;}
+  .meanings li{margin-left:20px;color:#444;font-size:14.5px;}
+  .sec{margin-top:18px;}
+  .sec h5{font-size:13px;color:#a39675;letter-spacing:2px;margin-bottom:8px;border-left:3px solid var(--gold);padding-left:8px;}
+  .family{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .family .fw{background:#FCF8EE;border:1px solid #F0E7D2;border-radius:8px;padding:7px 12px;font-size:13.5px;}
+  .family .fw .fipa{font-family:"Times New Roman",serif;color:var(--red-d);}
+  .family .fw .fgl{color:#666;margin-left:8px;}
+  .exm{background:#FFF8EA;border-left:3px solid var(--gold);padding:8px 14px;border-radius:0 8px 8px 0;margin-top:6px;font-size:14.5px;color:#5b4a1e;}
+  .exm .src{font-size:11px;color:#a39675;}
+
+  /* 字体带 */
+  .fontband{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 60px;}
+  .fontband h4{font-size:14px;color:#a39675;letter-spacing:2px;margin-bottom:4px;}
+  .fontband .sub{font-size:12.5px;color:#999;margin-bottom:14px;}
+  .glyphs{display:flex;gap:14px;flex-wrap:wrap;}
+  .glyph{text-align:center;}
+  .glyph .g-yi{font-size:52px;color:var(--red-d);line-height:1.2;}
+  .glyph .g-name{font-size:11px;color:#999;margin-top:2px;max-width:80px;}
+  .glyph .g-ipa{font-size:12px;color:#8a6d1f;font-family:"Times New Roman",serif;}
+
+  footer{background:var(--ink);color:#aaa;padding:22px 0;font-size:12.5px;text-align:center;}
+  @media(max-width:700px){.d-top{flex-direction:column;}.family{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">撒尼彝文数字词典 <em>· 查询演示</em></div>
+    <div class="tagline">1984《彝汉简明词典》全文数字化 ｜ 查字 · 查音 · 查义 ｜ 每一条都可回溯原书</div>
+    <div class="nums">
+      <span><b>328</b>页原书</span>
+      <span><b>8,294</b>词条</span>
+      <span><b>9,118</b>义项</span>
+      <span><b>1,390</b>字形梳理</span>
+      <span><b>4,970</b>字头图</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="searchbar">
+    <input id="q" placeholder="输入汉字释义 / 音标 / 页码，如：毕摩、pʰi+、哭哭啼啼" autocomplete="off">
+    <span class="hint">搜索</span>
+  </div>
+  <div class="chips" id="chips">
+    <span class="chip">毕摩</span><span class="chip">念经书</span><span class="chip">铃子</span>
+    <span class="chip">盖子</span><span class="chip">哭哭啼啼</span><span class="chip">唢呐</span>
+    <span class="chip">页 1</span><span class="chip">pʰi+</span>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="results" id="results"></div>
+
+  <!-- 详情面板 -->
+  <div class="detail" id="detail"></div>
+
+  <!-- 字体带 -->
+  <div class="fontband">
+    <h4>字形字体预览</h4>
+    <div class="sub">字头对齐编码后，全文可用字体渲染 —— 以下为 BabelStone Sani Yi 字体渲染的已编码字头（示范）</div>
+    <div class="glyphs" id="glyphs"></div>
+  </div>
+</div>
+
+<footer>撒尼彝文词典数字化工程 · 数据真实可溯源（每词条带原书页码）</footer>
+
+<script>
+/* ============ 数据（真实：原书第 1-2 页 49 词条精选） ============ */
+const DB = [{"sn": 1, "page": 1, "ipa": "pʰi+", "gloss": "念(念彝文经书)", "meanings": ["念(念彝文经书)"], "tags": ["宗教仪式"]}, {"sn": 2, "page": 1, "ipa": "pʰi+", "gloss": "跳(狮子舞)；跳月；动", "meanings": ["跳(狮子舞)；跳月；动"], "tags": ["天体气象"]}, {"sn": 3, "page": 1, "ipa": "pʰi+ dʐi+ tʰo7", "gloss": "(词义截断，未显示)", "meanings": ["(词义截断，未显示)"], "tags": []}, {"sn": 4, "page": 1, "ipa": "pʰi+ fA+", "gloss": "比方；譬如", "meanings": ["比方；譬如"], "tags": []}, {"sn": 5, "page": 1, "ipa": "pʰi+ fA+ dɤJ", "gloss": "举例", "meanings": ["举例"], "tags": []}, {"sn": 6, "page": 1, "ipa": "pʰi+ kʰA+", "gloss": "饼干", "meanings": ["饼干"], "tags": []}, {"sn": 7, "page": 1, "ipa": "pʰi+ le+", "gloss": "动", "meanings": ["动"], "tags": []}, {"sn": 8, "page": 1, "ipa": "pʰi+ lɤJ", "gloss": "比例", "meanings": ["比例"], "tags": []}, {"sn": 9, "page": 1, "ipa": "pʰi+ moJ", "gloss": "毕摩(彝族祭师，掌握彝文、传播彝文的人)", "meanings": ["毕摩(彝族祭师，掌握彝文、传播彝文的人)"], "tags": ["宗教仪式", "称谓"]}, {"sn": 10, "page": 1, "ipa": "pʰi+ mu+", "gloss": "念经(祭祀时念经)", "meanings": ["念经(祭祀时念经)"], "tags": ["宗教仪式"]}, {"sn": 11, "page": 1, "ipa": "pʰi+ mɤ+ tʂ+", "gloss": "扭秧歌；舞蹈", "meanings": ["扭秧歌；舞蹈"], "tags": []}, {"sn": 12, "page": 1, "ipa": "pʰi+ pɛJ", "gloss": "冰棒；冰棍", "meanings": ["冰棒；冰棍"], "tags": []}, {"sn": 13, "page": 1, "ipa": "pʰi+ pʰi+", "gloss": "步", "meanings": ["步"], "tags": []}, {"sn": 14, "page": 1, "ipa": "pʰi+ tsi+", "gloss": "饼子", "meanings": ["饼子"], "tags": []}, {"sn": 15, "page": 1, "ipa": "pʰi+ tʂ+", "gloss": "铃子", "meanings": ["铃子"], "tags": []}, {"sn": 16, "page": 1, "ipa": "pʰi+ tʂ+ tʂ+", "gloss": "摇铃", "meanings": ["摇铃"], "tags": []}, {"sn": 17, "page": 1, "ipa": "pʰi7", "gloss": "盖；覆盖；关", "meanings": ["盖；覆盖；关"], "tags": []}, {"sn": 18, "page": 1, "ipa": "pʰi7 lɿ7 pʰi7 lɤ+", "gloss": "果实累累", "meanings": ["果实累累"], "tags": []}, {"sn": 19, "page": 1, "ipa": "pʰi7 pe+", "gloss": "关上", "meanings": ["关上"], "tags": []}, {"sn": 20, "page": 1, "ipa": "pʰi7 tshiJ", "gloss": "盖住；关好", "meanings": ["盖住；关好"], "tags": []}, {"sn": 21, "page": 1, "ipa": "pʰi7 tu+", "gloss": "盖子(泛指)", "meanings": ["盖子(泛指)"], "tags": []}, {"sn": 22, "page": 1, "ipa": "pʰi7 tʂ+", "gloss": "盖子(专指一种做饭用的盖子)", "meanings": ["盖子(专指一种做饭用的盖子)"], "tags": ["饮食"]}, {"sn": 23, "page": 2, "ipa": "pʰi+", "gloss": "粢(指汤里的粢)", "meanings": ["粢(指汤里的粢)"], "tags": ["饮食"]}, {"sn": 24, "page": 2, "ipa": "pʰi+ dɤJ", "gloss": "①可能；可以 ②胜任", "meanings": ["①可能；可以", "②胜任"], "tags": []}, {"sn": 25, "page": 2, "ipa": "pʰi+ kɯ7 no7 ŋɤJ", "gloss": "动物", "meanings": ["动物"], "tags": []}, {"sn": 26, "page": 2, "ipa": "pʰi+ mu+", "gloss": "①很 ②热烈", "meanings": ["①很", "②热烈"], "tags": []}, {"sn": 27, "page": 2, "ipa": "pʰi+ mu+ lu7 sɔ+", "gloss": "热烈欢迎；非常喜欢", "meanings": ["热烈欢迎；非常喜欢"], "tags": []}, {"sn": 28, "page": 2, "ipa": "pʰi+ mu+ neJ", "gloss": "很早", "meanings": ["很早"], "tags": []}, {"sn": 29, "page": 2, "ipa": "pʰi+ mu+ nɔ7", "gloss": "很多", "meanings": ["很多"], "tags": []}, {"sn": 30, "page": 2, "ipa": "pʰi+ mu+ ʂeJ", "gloss": "很少", "meanings": ["很少"], "tags": []}, {"sn": 31, "page": 2, "ipa": "pʰi+ pʰi+", "gloss": "非常", "meanings": ["非常"], "tags": []}, {"sn": 32, "page": 2, "ipa": "pʰi+ pʰi+ mu+", "gloss": "最", "meanings": ["最"], "tags": []}, {"sn": 33, "page": 2, "ipa": "pʰi+ tʂ+", "gloss": "菜刀", "meanings": ["菜刀"], "tags": ["建筑工具"]}, {"sn": 34, "page": 2, "ipa": "pʰi+ tʂ+", "gloss": "食囊；膝囊(鸡、鸭等膝囊)", "meanings": ["食囊；膝囊(鸡、鸭等膝囊)"], "tags": ["动物"]}, {"sn": 35, "page": 2, "ipa": "pʰi7", "gloss": "①撒粪 ②代；辈(一代人；一辈人)", "meanings": ["①撒粪", "②代；辈(一代人；一辈人)"], "tags": ["称谓"]}, {"sn": 36, "page": 2, "ipa": "pʰi7 be7", "gloss": "花边", "meanings": ["花边"], "tags": ["植物"]}, {"sn": 37, "page": 2, "ipa": "pʰi7 lɿ7", "gloss": "唢呐", "meanings": ["唢呐"], "tags": []}, {"sn": 38, "page": 2, "ipa": "pʰi7 pʰi7 tʰo7 tʰo7", "gloss": "哭哭啼啼", "meanings": ["哭哭啼啼"], "tags": []}, {"sn": 39, "page": 2, "ipa": "pʰi7 pʰi7 ʑo7 ʑo7", "gloss": "哭哭啼啼(专指大人)", "meanings": ["哭哭啼啼(专指大人)"], "tags": ["称谓"]}, {"sn": 40, "page": 2, "ipa": "pʰi7 tʂJ", "gloss": "倒霉", "meanings": ["倒霉"], "tags": []}, {"sn": 41, "page": 2, "ipa": "pʰi7 xɔ+", "gloss": "撒开；撒掉", "meanings": ["撒开；撒掉"], "tags": []}, {"sn": 42, "page": 2, "ipa": "pʰiJ", "gloss": "拉痢", "meanings": ["拉痢"], "tags": []}, {"sn": 43, "page": 2, "ipa": "pʰiJ mɤ+", "gloss": "笔墨", "meanings": ["笔墨"], "tags": []}, {"sn": 44, "page": 2, "ipa": "pʰiJ neJ", "gloss": "毕业", "meanings": ["毕业"], "tags": []}, {"sn": 45, "page": 2, "ipa": "pʰiJ nɿJ duJ mo+", "gloss": "秃笔", "meanings": ["秃笔"], "tags": []}, {"sn": 46, "page": 2, "ipa": "pʰiJ o7", "gloss": "笔尖", "meanings": ["笔尖"], "tags": []}, {"sn": 47, "page": 2, "ipa": "pʰiJ pʰiJ ʐ?ɤJ ʐ?ɤJ", "gloss": "单单啥啥(拉痢或强行拖人时的象声词)", "meanings": ["单单啥啥(拉痢或强行拖人时的象声词)"], "tags": ["称谓"]}, {"sn": 48, "page": 2, "ipa": "pʰiJ tʂ+", "gloss": "逼死", "meanings": ["逼死"], "tags": []}, {"sn": 49, "page": 2, "ipa": "pʰiJ xɔ+", "gloss": "淹", "meanings": ["淹"], "tags": []}];
+
+/* 字头图（相对路径，部分词条已裁图） */
+const IMG = {"SN00001":"图/SN00001.jpg","SN00004":"图/SN00004.jpg","SN00010":"图/SN00010.jpg"};
+
+/* 原书例句（页 1 左栏"盖"词条下） */
+const EX = {"pʰi7 盖":["把壶盖起来。","落雪覆盖山头。","把门关起来。"]};
+
+const FONTBAND = [{"name": "SANI SYLLABLE BE", "pua": 61451, "ipa": "pe˧", "page": "3"}, {"name": "SANI SYLLABLE BEP", "pua": 61452, "ipa": "pe˨˩", "page": "3"}, {"name": "SANI SYLLABLE BIE", "pua": 61454, "ipa": "pɛ˧", "page": "4"}, {"name": "SANI SYLLABLE BIER", "pua": 61456, "ipa": "pɛ̠˧", "page": "4"}, {"name": "SANI SYLLABLE BAET", "pua": 61457, "ipa": "pᴀ˥", "page": "4"}, {"name": "SANI SYLLABLE BAE", "pua": 61458, "ipa": "pᴀ˧", "page": "4"}, {"name": "SANI SYLLABLE BIEP", "pua": 61455, "ipa": "pɛ˨˩", "page": "4"}, {"name": "SANI SYLLABLE BAEP", "pua": 61459, "ipa": "pᴀ˨˩", "page": "5"}];
+
+/* ============ 渲染 ============ */
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function ipaHtml(ipa){return `<span class="ipa-big">${esc(ipa)}<span class="spk">🔊</span></span>`;}
+
+function results(list){
+  const box=document.getElementById("results");
+  if(!list.length){box.innerHTML='<div style="text-align:center;color:#b9ab8a;padding:26px">没有匹配词条，试试别的词</div>';return;}
+  box.innerHTML=list.map(e=>{
+    const sn="SN"+String(e.sn).padStart(5,"0");
+    const img=IMG[sn]?`<img class="thumb" src="${IMG[sn]}" title="原书字头图">`
+                     :`<div class="noimg">字</div>`;
+    const tags=(e.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
+    return `<div class="entry" onclick="showDetail('${sn}')">
+      ${img}
+      <div class="mid">${ipaHtml(e.ipa)}
+        <div class="gloss">${esc(e.gloss)}</div>
+        <div class="tags">${tags}</div></div>
+      <div class="pg">原书<b> 第${e.page}页</b></div></div>`;
+  }).join("");
+}
+
+function meaningsList(e){
+  const ms=(e.meanings||[]).filter(m=>m && m.length>2);
+  if(ms.length<=1) return "";
+  return `<div class="sec"><h5>义 项</h5><ul class="meanings">${ms.map(m=>`<li>${esc(m.replace(/^[①②③④⑤⑥⑦⑧⑨⑩]+/,""))}</li>`).join("")}</ul></div>`;
+}
+
+function showDetail(sn){
+  const e=DB.find(x=>"SN"+String(x.sn).padStart(5,"0")===sn);
+  if(!e)return;
+  const img=IMG[sn]?`<div class="d-photo"><img src="${IMG[sn]}"><div class="cap">原书字头（扫描裁图）</div></div>`:"";
+  const headSyl=e.ipa.split(" ")[0];
+  const fam=DB.filter(x=>x.sn!==e.sn && x.ipa.split(" ")[0]===headSyl).slice(0,8);
+  const famHtml=fam.length?`<div class="sec"><h5>同字头词条（词组）</h5><div class="family">${
+    fam.map(f=>`<div class="fw"><span class="fipa">${esc(f.ipa)}</span><span class="fgl">${esc(f.gloss.slice(0,18))}</span></div>`).join("")}
+  </div></div>`:"";
+  const exKey=e.gloss.replace(/[()（）：:①②③④⑤⑥⑦⑧⑨⑩·]/g,"").slice(0,6);
+  const ex=(EX[e.gloss]||[]).map(s=>`<div class="exm">${esc(s)}<span class="src"> 原书例句</span></div>`).join("");
+  const exHtml=ex?`<div class="sec"><h5>句式 · 原书例句</h5>${ex}</div>`:"";
+  document.getElementById("detail").innerHTML=`
+    <div class="d-top">
+      <div class="d-glyph"><div class="bigyi">字</div><div class="cap">彝文字形（字体渲染，编码中）</div></div>
+      ${img}
+      <div class="d-info">
+        <div class="row"><span class="lb">读音</span><span class="d-ipa">${esc(e.ipa)}<span class="spk">🔊</span></span></div>
+        <div class="row"><span class="lb">释义</span><span class="d-gloss">${esc(e.gloss)}</span></div>
+        <div class="row"><span class="lb">出处</span><span>原书第 ${e.page} 页（SN ${e.sn}）</span></div>
+        ${(e.tags||[]).length?`<div class="row"><span class="lb">类别</span><span>${e.tags.map(esc).join("、")}</span></div>`:""}
+      </div>
+    </div>
+    ${meaningsList(e)}
+    ${famHtml}
+    ${exHtml}`;
+  document.getElementById("detail").classList.add("on");
+  document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function search(kw){
+  kw=kw.trim().toLowerCase();
+  const list=!kw?DB.slice(0,20):DB.filter(e=>{
+    const hay=(e.gloss+e.ipa+(e.tags||[]).join("")+e.page+" SN"+e.sn).toLowerCase();
+    return hay.includes(kw);
+  });
+  document.getElementById("count").textContent=`共 ${list.length} 条结果（词库含 8,294 词条，此处展示第 1-2 页样例）`;
+  results(list);
+}
+
+/* 字体带渲染 */
+document.getElementById("glyphs").innerHTML=FONTBAND.map(g=>
+  `<div class="glyph"><div class="g-yi">&#${g.pua};</div><div class="g-ipa">${g.ipa}</div><div class="g-name">${g.name.replace("SANI SYLLABLE ","")}</div></div>`
+).join("");
+
+/* 事件 */
+document.getElementById("q").addEventListener("input",e=>search(e.target.value));
+document.getElementById("chips").addEventListener("click",e=>{
+  if(e.target.classList.contains("chip")){
+    document.getElementById("q").value=e.target.textContent.trim();
+    search(e.target.textContent.trim());
+  }
+});
+
+/* 默认展示 */
+search("");
+showDetail("SN00001");
+</script>
+</body>
+</html>
