@@ -151,6 +151,11 @@
   section{padding:24px 0;}
   .hero h1{font-size:22px;}
 }
+  .topnav{background:#7A1212;border-top:1px solid rgba(255,255,255,.18);position:sticky;top:0;z-index:50;}
+  .topnav .wrap{display:flex;gap:8px;flex-wrap:wrap;padding:10px 22px;}
+  .topnav a{color:#fff;text-decoration:none;font-size:13.5px;padding:6px 14px;border-radius:16px;background:rgba(255,255,255,.13);}
+  .topnav a:hover{background:var(--gold);color:#4a1616;}
+  @media(max-width:720px){.topnav .wrap{padding:8px 12px;gap:6px;}.topnav a{font-size:12.5px;padding:5px 11px;}}
 </style>
 </head>
 <body>
@@ -159,16 +164,24 @@
   <div class="wrap">
     <div class="kicker">石林 · 撒尼彝语</div>
     <h1>石林撒尼彝语数字资料整理</h1>
-    <p class="sub">基于 1984 年《彝汉简明词典》的逐页数字化整理，建立可查询、可回溯的字头与词条资料。</p>
+    <p class="sub">基于 1984 年《彝汉简明词典》的逐页数字化整理，建立可查询、可回溯的字头与词条资料；并整理石林撒尼语口语教材、分类词表与丧葬经文等地方语言资料。</p>
     <div class="nums">
       <div class="num"><b>328</b><span>原书页整理</span></div>
       <div class="num"><b>8,294</b><span>词条收录</span></div>
       <div class="num"><b>9,118</b><span>义项</span></div>
       <div class="num"><b>4,970</b><span>字头图像</span></div>
-      <div class="num"><b>1,390</b><span>字形梳理</span></div>
+      <div class="num"><b>401</b><span>口语句（带录音）</span></div>
+      <div class="num"><b>5,506</b><span>经文经行</span></div>
     </div>
   </div>
 </header>
+
+<nav class="topnav"><div class="wrap">
+  <a href="dudou.html">🔊 口语 400 句点读</a>
+  <a href="unified.html">🔍 统一检索</a>
+  <a href="sangjiajing.html">📜 丧家经</a>
+  <a href="about.html">📋 数据说明</a>
+</div></nav>
 
 <div class="wrap">
 
