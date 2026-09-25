@@ -5,6 +5,7 @@
 <style>
 :root{--bg:#faf8f4;--fg:#2b2b2b;--accent:#7A1212;--line:#e2ddd4}
 @font-face{font-family:"SaniYi";src:url("BabelStoneSaniYi.ttf") format("truetype");}
+@font-face{font-family:"SlywSub";src:url("slyw_subset.woff2") format("woff2");}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Microsoft YaHei",sans-serif}
 header{background:var(--accent);color:#fff;padding:20px 18px}
@@ -24,6 +25,7 @@ td.g{text-align:center}
 .glyph:hover{background:#f0e8dc}
 .img img{max-height:66px;max-width:190px;border-radius:4px}
 .slywimg img{max-height:56px;max-width:110px}
+.slywfont{font-family:"SlywSub",serif;font-size:42px;line-height:1;cursor:pointer}
 .code{font-family:Consolas,monospace;font-size:11.5px;color:#7a6a52}
 .mark{font-size:17px;cursor:pointer;user-select:none;opacity:.3;padding:0 3px}
 .mark.on{opacity:1}
@@ -75,7 +77,7 @@ function render(){
       <td>${esc(r.gloss).slice(0,20)}<div class="code">SN${r.sn} · 页${r.page}</div></td>
       <td class="code">${esc(r.ipa)}</td>
       <td class="img g">${r.img?`<img src="data:image/jpeg;base64,${r.img}">`:'<span class="miss">—</span>'}</td>
-      <td class="slywimg g">${r.slywimg?`<img src="data:image/png;base64,${r.slywimg}" title="${esc(r.slywch)}">`:'<span class="miss">—</span>'}</td>
+      <td class="g"><span class="slywfont glyph" data-c="${esc(r.slywch)}" title="点击复制">${esc(r.slywch)}</span></td>
       <td class="code">${esc(r.sipa)}<br>码 ${esc(r.code)}<br>No.${r.no} ${esc((r.sgloss||"").slice(0,8))}</td>
       <td class="g"><span class="bs glyph" data-c="${r.bsc}">${r.bsc||'<span class="miss">无</span>'}</span><div class="code">${r.xx||""}</div></td>
       <td class="g"><span class="mark ${m===1?"on":""}" data-sn="${r.sn}" data-v="1">✔</span><span class="mark ${m===2?"on":""}" data-sn="${r.sn}" data-v="2">✘</span></td>
