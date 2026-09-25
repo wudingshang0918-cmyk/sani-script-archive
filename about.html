@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>数据说明 · 石林撒尼语数字语言资料</title>
+<style>
+:root{--bg:#faf8f4;--fg:#2b2b2b;--accent:#7A1212;--line:#e2ddd4;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Microsoft YaHei",sans-serif;line-height:1.8}
+header{background:var(--accent);color:#fff;padding:26px 20px}
+h1{margin:0 0 5px;font-size:21px}
+.sub{opacity:.85;font-size:13px}
+nav{margin-top:12px}nav a{color:#fff;opacity:.85;font-size:13px;margin-right:14px;text-decoration:none}
+nav a:hover{opacity:1;text-decoration:underline}
+.wrap{max-width:880px;margin:0 auto;padding:22px 20px 60px}
+h2{font-size:17px;color:var(--accent);border-left:4px solid var(--accent);padding-left:10px;margin:32px 0 12px}
+h3{font-size:15px;margin:20px 0 8px;color:#444}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#f5f1ea;font-weight:600;white-space:nowrap}
+code{background:#f3efe8;padding:1px 6px;border-radius:4px;font-size:12.5px;font-family:Consolas,monospace}
+.note{background:#fff;border-left:4px solid var(--accent);padding:12px 16px;margin:14px 0;font-size:14px}
+.warn{background:#fdf6e8;border-left:4px solid #c9a227;padding:12px 16px;margin:14px 0;font-size:14px}
+.tag{display:inline-block;padding:2px 9px;border-radius:11px;font-size:11.5px;font-weight:600}
+.t-public{background:#e3f2e8;color:#1d6b3a}
+.t-perm{background:#fdf0d5;color:#8a6d3b}
+.t-unknown{background:#eee;color:#777}
+.t-nodist{background:#fbe4e4;color:#a33}
+ul{padding-left:22px}li{margin:5px 0}
+.foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:#888;font-size:12.5px}
+a{color:var(--accent)}
+@media(max-width:720px){table{font-size:12.5px}th,td{padding:6px 7px}.wrap{padding:16px 12px 50px}}
+</style></head><body>
+<header>
+  <h1>数据说明</h1>
+  <div class="sub">Sources, Processing &amp; Rights · 石林撒尼语数字语言资料</div>
+  <nav><a href="index.html">资料库主页</a><a href="dudou.html">口语400句点读</a><a href="sangjiajing.html">丧家经</a><a href="unified.html">统一检索</a></nav>
+</header>
+<div class="wrap">
+
+<div class="note">
+本页说明所整理资料的<b>来源、加工方式、数据质量与使用条件</b>。所有条目均保留原书页码，可回溯至原始文献核对。
+</div>
+
+<h2>一、资料构成</h2>
+<table>
+<tr><th>编号</th><th>资料</th><th>出版信息</th><th>规模</th><th>使用条件</th></tr>
+<tr><td><code>SANI1984</code></td><td>《彝汉简明词典》</td><td>1984 年 · 石林（原路南）地方编印</td><td>8,294 词条 / 9,118 义项 / 4,970 字头图</td><td><span class="tag t-unknown">待确认</span></td></tr>
+<tr><td><code>SANI400</code></td><td>《石林撒尼口语400句》</td><td>2013 年 · 民族出版社（王向方 编著）</td><td>401 句 / 427 段录音</td><td><span class="tag t-perm">需授权</span></td></tr>
+<tr><td><code>SHIZIBEN</code></td><td>《彝文读本·识字本》</td><td>2020 年 · 云南人民出版社（ISBN 978-7-222-19523-3）</td><td>390 词 / 25 个语义类</td><td><span class="tag t-perm">需授权</span></td></tr>
+<tr><td><code>SANGJIAJING</code></td><td>《彝族撒尼丧葬经译疏·丧家经》</td><td>扫描本 · 出版信息待核实</td><td>5,506 条经行 / 704 页</td><td><span class="tag t-unknown">待确认</span></td></tr>
+</table>
+<p style="font-size:13.5px;color:#666">另有两项<b>未公开</b>的参照资料：石林县民族研究所电子词典（82,819 条）与其字库（9,698 字形），经个人渠道获得，标记为 <span class="tag t-nodist">不得分发</span>，仅作内部校验使用，不随本资料集发布。</p>
+
+<h2>二、加工方式</h2>
+<table>
+<tr><th>环节</th><th>方法</th><th>涉及资料</th></tr>
+<tr><td>图像获取</td><td>原书扫描 / 原 PDF 页渲染（300 dpi）</td><td>全部</td></tr>
+<tr><td>文字识别</td><td>OCR（RapidOCR）+ 版面结构解析</td><td>全部</td></tr>
+<tr><td>结构切分</td><td>按版面锚点切分：词条行 / 句子五行 / 经行四行（以国际音标行为锚点）</td><td>SANI400、SANGJIAJING</td></tr>
+<tr><td>音频提取</td><td>配套光盘逐句提取为单句音频（单声道 64 kbps）</td><td>SANI400</td></tr>
+<tr><td>读音规范化</td><td>音标清洗与质量分级（见下）</td><td>SANI400、SANGJIAJING</td></tr>
+<tr><td>交叉校验</td><td>与独立来源按释义配对比对（调号一致率 90.2%）；汉字注音交叉验证（51% 音节数吻合）</td><td>SANI1984、SANI400</td></tr>
+</table>
+
+<h2>三、数据质量与已知限制</h2>
+
+<h3>读音（国际音标）质量分级</h3>
+<p style="font-size:14px">OCR 对国际音标符号的识别存在系统性误差（如 <code>i</code> 读作 <code>1</code>、元音 <code>ɒ</code> 读作 <code>p</code>、<code>ɑ</code> 读作 <code>α</code>）。已依照实测规律做自动清洗并分级，每条记录带 <code>ipa_status</code> 字段：</p>
+<table>
+<tr><th>状态</th><th>含义</th><th>SANI400</th><th>SANGJIAJING</th></tr>
+<tr><td><code>ok</code></td><td>清洗后结构完整，可用</td><td>104（26%）</td><td>1,246（23%）</td></tr>
+<tr><td><code>suspect</code></td><td>部分可辨，建议核对</td><td>214（53%）</td><td>2,655（48%）</td></tr>
+<tr><td><code>failed</code></td><td>自动清洗不可用（<b>原始值仍保留在 <code>ipa_raw</code></b>）</td><td>83（21%）</td><td>1,605（29%）</td></tr>
+</table>
+
+<div class="warn">
+<b>读音使用提醒</b>：本资料集的国际音标为<b>自动识别结果</b>，尚未经母语者逐条校对。用于语言学研究或教学前，请以原始文献核对，或由母语者复核。SANI400 附带书中的<b>汉字注音</b>列（原书内容，质量可靠），可作为读音参考的第二依据。
+</div>
+
+<h3>其他限制</h3>
+<ul>
+<li><b>彝文字形</b>：手写体彝文无法被现有 OCR 识别。词典的字头以图像保存（4,970 张）；经文与词表中的彝文列未作识别，需查阅原书页面。</li>
+<li><b>词条释义</b>：以原书汉文释义为准，个别条目因印刷模糊或版面破损可能存在识别误差。</li>
+<li><b>经行切分</b>：丧家经按四行结构（彝文／音标／直译／意译）自动切分，直译行规范汉字率达 99.3%，个别行可能有错位。</li>
+<li><b>页码</b>：均指原书页码，可用于回溯核对。</li>
+</ul>
+
+<h2>四、数据字段</h2>
+<table>
+<tr><th>字段</th><th>说明</th></tr>
+<tr><td><code>record_id</code></td><td>全局唯一编号（如 <code>SANI1984-00009</code>、<code>SANI400-392</code>、<code>SANGJIAJING-P0064-R-04</code>）</td></tr>
+<tr><td><code>source_id</code></td><td>资料来源标识（见上表）</td></tr>
+<tr><td><code>page</code></td><td>原书页码</td></tr>
+<tr><td><code>rights</code></td><td>使用条件标记（PUBLIC / PERMISSION_REQUIRED / DO_NOT_DISTRIBUTE / UNKNOWN）</td></tr>
+<tr><td><code>provenance</code></td><td>加工方式与整理时间</td></tr>
+<tr><td><code>confidence</code></td><td>整条记录的置信度（high / medium）</td></tr>
+<tr><td><code>ipa_clean</code> / <code>ipa_raw</code></td><td>清洗后音标 / 原始识别值（保留以追溯）</td></tr>
+<tr><td><code>ipa_status</code> / <code>ipa_score</code></td><td>音标质量等级 / 结构完整度评分</td></tr>
+</table>
+
+<h2>五、使用条件</h2>
+<div class="note">
+本资料集是对既有出版物的<b>数字化整理成果</b>，整理与标注部分可自由引用（请注明来源与整理方）；但<b>原始文献内容</b>的著作权属于原作者与出版单位。
+</div>
+<ul>
+<li>用于<b>个人学习、学术研究、非商业引用</b>：欢迎使用，请注明资料来源与原书页码。</li>
+<li>用于<b>公开转载、商业用途、二次发布</b>：请先取得原著作权人（作者／出版单位）许可。</li>
+<li>本资料集正在与相关单位沟通授权事宜，授权状态更新后将在本页说明。</li>
+</ul>
+
+<h2>六、建议引用格式</h2>
+<p style="font-size:13.5px;background:#fff;border:1px solid var(--line);padding:12px 14px;border-radius:8px">
+《彝汉简明词典》，1984 年，石林；及《石林撒尼口语400句》，王向方 编著，民族出版社，2013；《彝文读本·识字本》，云南人民出版社，2020；《彝族撒尼丧葬经译疏·丧家经》。数字化整理：石林撒尼语数字语言资料整理（2026）。
+</p>
+
+<h2>七、参与与更正</h2>
+<ul>
+<li>数据仍有读音校核、彝文补录等工作在进行中，欢迎母语者、研究者指出错误。</li>
+<li>本资料集面向<b>语言学研究、母语教学、文字数字保存</b>等用途开放交流，欢迎研究机构与地方文化单位联系。</li>
+</ul>
+
+<div class="foot">
+最后更新：2026 年 9 月 · 数据总量 14,591 条（四类资料合计）<br>
+本页仅说明数据情况，不含原始文献全文。
+</div>
+</div></body></html>

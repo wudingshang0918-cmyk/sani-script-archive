@@ -1,0 +1,119 @@
+{
+  "project": "石林撒尼语数字语言资料库",
+  "project_en": "Sani Yi Digital Language Resources",
+  "version": "2.0",
+  "generated": "2026-09-24",
+  "sources": {
+    "SANI1984": {
+      "source_id": "SANI1984",
+      "title": "彝汉简明词典",
+      "publisher": "云南省路南彝族自治县（石林县前身）",
+      "year": 1984,
+      "unit": "词条",
+      "rights": "UNKNOWN",
+      "rights_note": "1984 年地方出版，版权状态待确认",
+      "processing": "AI 转写（页图 OCR）+ 逻辑校验",
+      "confidence": "medium"
+    },
+    "SANI400": {
+      "source_id": "SANI400",
+      "title": "石林撒尼口语400句",
+      "publisher": "民族出版社",
+      "year": 2013,
+      "unit": "句子",
+      "rights": "PERMISSION_REQUIRED",
+      "rights_note": "编著者王向方（石林县民族研究所所长），可联系获取授权",
+      "processing": "扫描 OCR + 结构解析 + 音频配对",
+      "confidence": "high"
+    },
+    "SHIZIBEN": {
+      "source_id": "SHIZIBEN",
+      "title": "彝文读本·识字本",
+      "publisher": "云南人民出版社",
+      "year": 2020,
+      "unit": "词",
+      "rights": "PERMISSION_REQUIRED",
+      "rights_note": "2020 年正式出版物，ISBN 978-7-222-19523-3",
+      "processing": "扫描 OCR + 词典交叉过滤",
+      "confidence": "medium"
+    },
+    "SANGJIAJING": {
+      "source_id": "SANGJIAJING",
+      "title": "彝族撒尼丧葬经译疏·丧家经",
+      "publisher": "待确认",
+      "year": null,
+      "unit": "经行",
+      "rights": "UNKNOWN",
+      "rights_note": "扫描版文献，出版信息待核实",
+      "processing": "扫描 OCR + IPA 锚点版面解析（四行对照）",
+      "confidence": "medium"
+    }
+  },
+  "datasets": [
+    {
+      "source_id": "SANI1984",
+      "file": "D1_词典_V2.csv",
+      "records": 8294,
+      "unit": "词条",
+      "key_fields": [
+        "撒尼语读音",
+        "汉文释义"
+      ]
+    },
+    {
+      "source_id": "SANI400",
+      "file": "D2_400句_V2.csv",
+      "records": 401,
+      "unit": "句子",
+      "key_fields": [
+        "汉语句",
+        "撒尼语IPA",
+        "直译",
+        "audio_path"
+      ]
+    },
+    {
+      "source_id": "SHIZIBEN",
+      "file": "D3_识字本_V2.csv",
+      "records": 390,
+      "unit": "词",
+      "key_fields": [
+        "word",
+        "chapter"
+      ]
+    },
+    {
+      "source_id": "SANGJIAJING",
+      "file": "D4_丧家经_V2.csv",
+      "records": 5506,
+      "unit": "经行",
+      "key_fields": [
+        "彝文",
+        "IPA",
+        "直译",
+        "意译"
+      ]
+    }
+  ],
+  "external_references": [
+    {
+      "name": "石林县民族研究所电子词典",
+      "records": 82819,
+      "rights": "DO_NOT_DISTRIBUTE",
+      "note": "私人渠道获得，不得公开发布"
+    },
+    {
+      "name": "石林彝文字库（3 字体）",
+      "records": 9698,
+      "rights": "DO_NOT_DISTRIBUTE",
+      "note": "同上"
+    },
+    {
+      "name": "BabelStone Sani Yi",
+      "records": 1390,
+      "rights": "PUBLIC",
+      "note": "开源字库（SIL OFL）"
+    }
+  ],
+  "total_records": 14591
+}
