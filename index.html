@@ -292,19 +292,38 @@ function matchRef(kw){
 /* 词条搜索 */
 function matchLocal(kw){
   const k=kw.replace(/^页\s*/,"页");
-  const hits=L.filter(e=> e.gloss.toLowerCase().includes(kw) || e.ipa.toLowerCase().includes(kw)
-      || (k.startsWith("页") && String(e.page)===k.slice(1).trim())
-      || String(e.sn).includes(kw));
-  /* 按匹配质量排序：释义就是它 > 释义开头是它 > 释义里出现 > 读音命中 */
-  const score=e=>{ const g=(e.gloss||"").toLowerCase();
-    const clean=g.replace(/^[①②③④⑤⑥⑦⑧⑨⑩\s]+/,"").replace(/^\d+[.、]\s*/,"");
-    if(clean===kw) return 0;
-    const first=clean.split(/[，,、；;：:]/)[0];
-    if(clean.startsWith(kw)||first===kw) return 1;
-    if(clean.includes(kw)) return 3;
-    if((e.ipa||"").toLowerCase().includes(kw)) return 4;
-    return 5; };
-  return hits.sort((a,b)=> score(a)-score(b) || a.sn-b.sn).slice(0,16);
+  /* 取释义的首个义项（去掉 ①②③ 和括号） */
+  const firstOf=g=>{ const a=(g||"").replace(/^[①②③④⑤⑥⑦⑧⑨⑩\s]+/,"").replace(/^\d+[.、]\s*/,"");
+    return a.split(/[，,、；;：:]/)[0].replace(/[（(].*?[)）]/g,"").trim(); };
+  /* 1) 锚点：释义就是该词的条目 → 取其彝文读音首音节（= 词素） */
+  const anchors=L.filter(e=> firstOf(e.gloss)===kw);
+  const stems=[...new Set(anchors.map(e=>((e.ipa||"").trim().split(/\s+/)[0]||"")).filter(Boolean))];
+  /* 2) 按彝文词素捞同族词（读音首音节相同 → 水/水井/水缸/挑水 一路带出） */
+  let hits=null, mode="";
+  if(stems.length){
+    hits=L.filter(e=> stems.includes((e.ipa||"").trim().split(/\s+/)[0]));
+    mode="按彝文词素";
+  }
+  /* 3) 兜底：没有该词的彝文记录时，退回文本匹配（读音/释义/页码/编号） */
+  if(!hits || !hits.length){
+    hits=L.filter(e=> e.gloss.toLowerCase().includes(kw) || e.ipa.toLowerCase().includes(kw)
+        || (k.startsWith("页") && String(e.page)===k.slice(1).trim())
+        || String(e.sn).includes(kw));
+    mode="按文本";
+  }
+  const anchorPages=anchors.map(a=>parseInt(a.page)||0).filter(Boolean);
+  const nearPage=e=>{ const p=parseInt(e.page)||0;
+    return anchorPages.length? Math.min(...anchorPages.map(a=>Math.abs(p-a))) : 999; };
+  const score=e=>{ const f=firstOf(e.gloss);
+    if(f===kw) return 0;                       /* 词根本身排最前 */
+    if(f.startsWith(kw)) return 1;             /* 直接派生的释义排其次 */
+    const d=Math.min(nearPage(e),30);          /* 同页/邻近页的词条优先（词典按音序+语义聚类） */
+    return 2 + d/30 + Math.min(((e.ipa||"").trim().split(/\s+/).length-1),3);
+  };
+  hits.sort((a,b)=> score(a)-score(b) || a.sn-b.sn);
+  const out=hits.slice(0,60);
+  out.mode=mode; out.stems=stems;
+  return out;
 }
 
 function render(){
@@ -314,7 +333,8 @@ function render(){
     document.getElementById("count").textContent=""; return;}
   const rs=matchRef(kw), ls=matchLocal(kw);
   const total=rs.length+ls.length;
-  document.getElementById("count").textContent=`找到字头 ${rs.length} 个 · 词条 ${ls.length} 条`;
+  document.getElementById("count").textContent=`找到字头 ${rs.length} 个 · 词条 ${ls.length} 条`+
+    (ls.mode? `　【${ls.mode}${ls.stems&&ls.stems.length? "："+ls.stems.join(" ") : ""}】` : "");
   let h="";
   if(rs.length){h+=`<div class="res-sec">字 头（<b>${rs.length}</b>）</div>`+
     rs.map(r=>`<div class="entry" onclick="showRef('${r.id}')">
