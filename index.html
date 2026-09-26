@@ -156,6 +156,8 @@
   .topnav a{color:#fff;text-decoration:none;font-size:13.5px;padding:6px 14px;border-radius:16px;background:rgba(255,255,255,.13);}
   .topnav a:hover{background:var(--gold);color:#4a1616;}
   @media(max-width:720px){.topnav .wrap{padding:8px 12px;gap:6px;}.topnav a{font-size:12.5px;padding:5px 11px;}}
+  .glsm{height:36px;margin:1px 2px;vertical-align:middle;}
+  @media(max-width:720px){.glsm{height:28px;}}
 </style>
 <script>
 window.GLYPHS = {};
@@ -312,7 +314,7 @@ function render(){
   if(ls.length){h+=`<div class="res-sec">词 条（<b>${ls.length}</b>）</div>`+
     ls.map(e=>{
       const sn="SN"+String(e.sn).padStart(5,"0");
-      const img=DB_IMG[sn]?`<img src="${DB_IMG[sn]}">`:`<span class="ph">彝</span>`;
+      const gl=(window.GLYPHS&&window.GLYPHS[String(e.sn)])||[];const img=gl.length?gl.map(f=>`<img src="glyphs/${f}" class="glsm">`).join(""):`<span class="ph">彝</span>`;
       return `<div class="entry" onclick="showLocal('${sn}')">
         <div class="glyphbox">${img}</div>
         <div class="mid"><div class="t1">${esc(e.ipa)}<span class="spk"> 🔊</span></div>
