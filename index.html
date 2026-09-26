@@ -157,6 +157,10 @@
   .topnav a:hover{background:var(--gold);color:#4a1616;}
   @media(max-width:720px){.topnav .wrap{padding:8px 12px;gap:6px;}.topnav a{font-size:12.5px;padding:5px 11px;}}
 </style>
+<script>
+window.GLYPHS = {};
+fetch("数据_glyphs.json").then(r=>r.json()).then(d=>{window.GLYPHS = d; if(typeof render==="function") render();});
+</script>
 </head>
 <body>
 
@@ -344,7 +348,8 @@ function showRef(id){
 /* 词条详情 */
 function showLocal(sn){
   const e=L.find(x=>"SN"+String(x.sn).padStart(5,"0")===sn); if(!e)return;
-  const img=DB_IMG[sn]?`<div style="text-align:center"><img src="${DB_IMG[sn]}" style="height:64px;border-radius:6px"><div style="font-size:11px;color:#999">原书字头裁图（已暂停显示）</div></div>`:"";
+  const gl = (window.GLYPHS && window.GLYPHS[String(e.sn)]) ? window.GLYPHS[String(e.sn)] : [];
+     const img = gl.length ? `<div style="text-align:center">${gl.map(f=>`<img src="glyphs/${f}" style="height:70px;margin:2px 4px;vertical-align:middle">`).join("")}<div style="font-size:11px;color:#999;margin-top:3px">彝文字形（石林彝文黑体）</div></div>` : "";
   const d=document.getElementById("detail");
   d.innerHTML=`<div class="d-head">
       <div class="big" style="font-size:56px">${img||"彝"}</div>
