@@ -292,9 +292,19 @@ function matchRef(kw){
 /* 词条搜索 */
 function matchLocal(kw){
   const k=kw.replace(/^页\s*/,"页");
-  return L.filter(e=> e.gloss.toLowerCase().includes(kw) || e.ipa.toLowerCase().includes(kw)
+  const hits=L.filter(e=> e.gloss.toLowerCase().includes(kw) || e.ipa.toLowerCase().includes(kw)
       || (k.startsWith("页") && String(e.page)===k.slice(1).trim())
-      || String(e.sn).includes(kw)).slice(0,16);
+      || String(e.sn).includes(kw));
+  /* 按匹配质量排序：释义就是它 > 释义开头是它 > 释义里出现 > 读音命中 */
+  const score=e=>{ const g=(e.gloss||"").toLowerCase();
+    const clean=g.replace(/^[①②③④⑤⑥⑦⑧⑨⑩\s]+/,"").replace(/^\d+[.、]\s*/,"");
+    if(clean===kw) return 0;
+    const first=clean.split(/[，,、；;：:]/)[0];
+    if(clean.startsWith(kw)||first===kw) return 1;
+    if(clean.includes(kw)) return 3;
+    if((e.ipa||"").toLowerCase().includes(kw)) return 4;
+    return 5; };
+  return hits.sort((a,b)=> score(a)-score(b) || a.sn-b.sn).slice(0,16);
 }
 
 function render(){
