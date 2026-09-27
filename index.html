@@ -60,9 +60,9 @@
   .res-sec b{color:var(--red-d);}
   .entry{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 16px;display:flex;gap:14px;align-items:center;cursor:pointer;transition:.15s;}
   .entry:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:0 3px 12px rgba(0,0,0,.07);}
-  .entry .glyphbox{width:56px;height:44px;background:#FBF6EC;border:1px solid #EDE3CB;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .entry .glyphbox{min-width:56px;height:44px;padding:0 7px;box-sizing:border-box;background:#FBF6EC;border:1px solid #EDE3CB;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .entry .glyphbox .g{font-size:30px;color:var(--red-d);line-height:1;}
-  .entry .glyphbox img{max-width:52px;max-height:38px;border-radius:4px;}
+  .entry .glyphbox img{height:36px;width:auto;max-width:none;border-radius:4px;}
   .entry .glyphbox .ph{font-size:20px;color:#b9ab8a;}
   .entry .mid{flex:1;min-width:0;}
   .entry .t1{font-size:15.5px;color:var(--red-d);font-family:"Times New Roman",serif;}
@@ -76,8 +76,8 @@
   .detail{background:#fff;border:2px solid var(--gold);border-radius:14px;padding:22px;margin:2px 0 34px;display:none;}
   .detail.on{display:block;}
   .d-head{display:flex;gap:22px;flex-wrap:wrap;align-items:center;border-bottom:2px solid var(--paper2);padding-bottom:16px;margin-bottom:14px;}
-  .d-head .big{font-size:88px;color:var(--red-d);line-height:1;background:#FCF8EE;border:1px solid var(--line);border-radius:14px;padding:6px 18px;}
-  .d-head .big img{height:74px;border-radius:6px;}
+  .d-head .big{font-size:88px;color:var(--red-d);line-height:1;background:#FCF8EE;border:1px solid var(--line);border-radius:14px;padding:6px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;max-width:100%;box-sizing:border-box;}
+  .d-head .big img{height:74px;width:auto;}
   .d-id{font-size:13px;color:#a39675;letter-spacing:1px;}
   .d-id b{color:var(--red-d);font-size:17px;}
   .d-ipa2{font-size:24px;color:var(--red-d);font-family:"Times New Roman",serif;margin-top:2px;}
@@ -124,9 +124,9 @@
   .searchbar input{font-size:15px;}
   .chip{padding:3px 10px;font-size:12px;}
   .entry{padding:9px 12px;gap:10px;}
-  .entry .glyphbox{width:44px;height:36px;}
+  .entry .glyphbox{min-width:44px;height:36px;}
   .entry .glyphbox .g{font-size:24px;}
-  .entry .glyphbox img{max-width:40px;max-height:30px;}
+  .entry .glyphbox img{height:28px;width:auto;max-width:none;}
   .entry .t1{font-size:14px;}
   .entry .t2{font-size:11px;}
   .entry .pg{font-size:10px;}
