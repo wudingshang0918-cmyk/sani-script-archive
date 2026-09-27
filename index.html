@@ -344,7 +344,7 @@ function render(){
   if(ls.length){h+=`<div class="res-sec">词 条（<b>${ls.length}</b>）</div>`+
     ls.map(e=>{
       const sn="SN"+String(e.sn).padStart(5,"0");
-      const gl=(window.GLYPHS&&window.GLYPHS[String(e.sn)])||[];const img=gl.length?gl.map(f=>{const cp=[...f].map(c=>'U'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join('');return `<img src="glyphs/${cp}.png" class="glsm" alt="${f}">`;}).join(""):`<span class="ph">彝</span>`;
+      const glRaw=(window.GLYPHS&&window.GLYPHS[String(e.sn)]);const gl=glRaw?(Array.isArray(glRaw)?glRaw:(glRaw.g||[])):[];const img=gl.length?gl.map(f=>{const cp=[...f].map(c=>'U'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join('');return `<img src="glyphs/${cp}.png" class="glsm" alt="${f}">`;}).join(""):`<span class="ph">彝</span>`;
       return `<div class="entry" onclick="showLocal('${sn}')">
         <div class="glyphbox">${img}</div>
         <div class="mid"><div class="t1">${esc(e.ipa)}<span class="spk"> 🔊</span></div>
@@ -380,7 +380,8 @@ function showRef(id){
 /* 词条详情 */
 function showLocal(sn){
   const e=L.find(x=>"SN"+String(x.sn).padStart(5,"0")===sn); if(!e)return;
-  const gl = (window.GLYPHS && window.GLYPHS[String(e.sn)]) ? window.GLYPHS[String(e.sn)] : [];
+  const glRaw = (window.GLYPHS && window.GLYPHS[String(e.sn)]) ? window.GLYPHS[String(e.sn)] : null;
+  const gl = glRaw ? (Array.isArray(glRaw) ? glRaw : (glRaw.g || [])) : [];
      const img = gl.length ? `<div style="text-align:center">${gl.map(f=>{const cp=[...f].map(c=>'U'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join(''); return `<img src="glyphs/${cp}.png" style="height:70px;margin:2px 4px;vertical-align:middle" alt="${f}">`;}).join("")}<div style="font-size:11px;color:#999;margin-top:3px">彝文字形（石林彝文黑体）</div></div>` : "";
   const d=document.getElementById("detail");
   d.innerHTML=`<div class="d-head">
