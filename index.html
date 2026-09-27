@@ -157,6 +157,7 @@
   .topnav a:hover{background:var(--gold);color:#4a1616;}
   @media(max-width:720px){.topnav .wrap{padding:8px 12px;gap:6px;}.topnav a{font-size:12.5px;padding:5px 11px;}}
   .glsm{height:36px;margin:1px 2px;vertical-align:middle;}
+  .altsep{color:#c9b98f;font-size:20px;margin:0 2px;vertical-align:middle;}
   @media(max-width:720px){.glsm{height:28px;}}
 </style>
 <script>
@@ -344,7 +345,7 @@ function render(){
   if(ls.length){h+=`<div class="res-sec">词 条（<b>${ls.length}</b>）</div>`+
     ls.map(e=>{
       const sn="SN"+String(e.sn).padStart(5,"0");
-      const glRaw=(window.GLYPHS&&window.GLYPHS[String(e.sn)]);const gl=glRaw?(Array.isArray(glRaw)?glRaw:(glRaw.g||[])):[];const img=gl.length?gl.map(f=>{const cp=[...f].map(c=>'U'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join('');return `<img src="glyphs/${cp}.png" class="glsm" alt="${f}">`;}).join(""):`<span class="ph">彝</span>`;
+      const glRaw=(window.GLYPHS&&window.GLYPHS[String(e.sn)]);const gl=glRaw?(Array.isArray(glRaw)?glRaw:(glRaw.g||[])):[];const altRaw=(glRaw&&!Array.isArray(glRaw)&&glRaw.alt)?glRaw.alt:[];const _one=g2=>g2.map(f=>{const cp=[...f].map(c=>'U'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join('');return `<img src="glyphs/${cp}.png" class="glsm" alt="${f}">`;}).join("");const img=gl.length?(_one(gl)+altRaw.map(g2=>`<span class="altsep">／</span>`+_one(g2)).join("")):`<span class="ph">彝</span>`;
       return `<div class="entry" onclick="showLocal('${sn}')">
         <div class="glyphbox">${img}</div>
         <div class="mid"><div class="t1">${esc(e.ipa)}<span class="spk"> 🔊</span></div>
@@ -382,7 +383,9 @@ function showLocal(sn){
   const e=L.find(x=>"SN"+String(x.sn).padStart(5,"0")===sn); if(!e)return;
   const glRaw = (window.GLYPHS && window.GLYPHS[String(e.sn)]) ? window.GLYPHS[String(e.sn)] : null;
   const gl = glRaw ? (Array.isArray(glRaw) ? glRaw : (glRaw.g || [])) : [];
-     const img = gl.length ? `<div style="text-align:center">${gl.map(f=>{const cp=[...f].map(c=>'U'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join(''); return `<img src="glyphs/${cp}.png" style="height:70px;margin:2px 4px;vertical-align:middle" alt="${f}">`;}).join("")}<div style="font-size:11px;color:#999;margin-top:3px">彝文字形（石林彝文黑体）</div></div>` : "";
+  const altRaw = (glRaw && !Array.isArray(glRaw) && glRaw.alt) ? glRaw.alt : [];
+  const _one2 = (g2, h) => g2.map(f=>{const cp=[...f].map(c=>'U'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join(''); return `<img src="glyphs/${cp}.png" style="height:${h}px;margin:2px 4px;vertical-align:middle" alt="${f}">`;}).join("");
+     const img = gl.length ? `<div style="text-align:center">${_one2(gl,70)}${altRaw.map(g2=>`<span class="altsep" style="font-size:40px;color:#c9b98f;margin:0 6px">／</span>`+_one2(g2,70)).join("")}<div style="font-size:11px;color:#999;margin-top:3px">彝文字形（石林彝文黑体）${altRaw.length?' · ／ 后为异说（南北方言差异）':''}</div></div>` : "";
   const d=document.getElementById("detail");
   d.innerHTML=`<div class="d-head">
       <div class="big" style="font-size:56px">${img||"彝"}</div>
