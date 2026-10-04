@@ -399,6 +399,12 @@ async function drawImg(text,title,sub){
   ctx.fillText('撒尼彝文工具 · 石林撒尼彝语数字资料整理',pad,Ht-18);
   return c.toDataURL('image/png');
 }
+function dataURLtoBlob(u){
+  const p=u.split(','),m=(p[0].match(/:(.*?);/)||[,'image/png'])[1],b=atob(p[1]);
+  const n=b.length,arr=new Uint8Array(n);
+  for(let i=0;i<n;i++)arr[i]=b.charCodeAt(i);
+  return new Blob([arr],{type:m});
+}
 /* 真正把图片交到手机手里：优先系统分享（能直接发微信／存相册），不行就下载 */
 async function doSave(blob,name){
   try{
@@ -426,7 +432,7 @@ async function saveImg(sel,title,noDL){
   const t=$(sel).value.trim();if(!t){toast('先点候选加几个字');return}
   toast('正在生成图片…');
   const url=await drawImg(t,title,t.length+' 个字符');
-  const blob=await (await fetch(url)).blob();
+  const blob=dataURLtoBlob(url);
   const name=(title||'撒尼彝文')+'.png';
   const box=$('#imgbox1');
   box.innerHTML='<div class="hint">图片好了 —— 点下面的黄色按钮保存；也可以<b>长按图片</b>选「保存图片／发送给朋友」</div>';
@@ -440,7 +446,7 @@ async function charImg(el,y,ipa,mean){
   const box=el.closest('.meta');
   toast('正在生成图片…');
   const url=await drawImg(y,'撒尼彝文：「'+String(mean).split('/')[0]+'」',ipa+'　释义：'+mean);
-  const blob=await (await fetch(url)).blob();
+  const blob=dataURLtoBlob(url);
   const old=box.querySelector('.imgwrap');if(old)old.remove();
   const w=document.createElement('div');w.className='imgwrap';
   w.innerHTML='<div class="hint">长按图片可保存；或点按钮直接保存／分享</div>';
