@@ -29,7 +29,7 @@
   section.alt{background:var(--paper2);}
   h2{font-size:24px;color:var(--red-d);margin-bottom:6px;display:flex;align-items:center;gap:12px;}
   h2 .no{background:var(--red);color:#fff;width:33px;height:33px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-  .lead{color:#666;margin-bottom:22px;padding-left:45px;font-size:14.5px;}
+  .lead{color:#666;margin-bottom:22px;padding-left:0;font-size:14.5px;}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:15px;}
   .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
   .card h4{color:var(--red-d);margin-bottom:7px;font-size:16px;}
@@ -153,9 +153,9 @@
 }
   .topnav{background:#7A1212;border-top:1px solid rgba(255,255,255,.18);position:sticky;top:0;z-index:50;}
   .topnav .wrap{display:flex;gap:8px;flex-wrap:wrap;padding:10px 22px;}
-  .topnav a{color:#fff;text-decoration:none;font-size:13.5px;padding:6px 14px;border-radius:16px;background:rgba(255,255,255,.13);}
+  .topnav a{color:#fff;text-decoration:none;font-size:17px;padding:10px 21px;border-radius:24px;background:rgba(255,255,255,.13);}
   .topnav a:hover{background:var(--gold);color:#4a1616;}
-  @media(max-width:720px){.topnav .wrap{padding:8px 12px;gap:6px;}.topnav a{font-size:12.5px;padding:5px 11px;}}
+  @media(max-width:720px){.topnav .wrap{padding:8px 12px;gap:6px;}.topnav a{font-size:15.5px;padding:8px 14px;}}
   .glsm{height:36px;margin:1px 2px;vertical-align:middle;}
   .altsep{color:#c9b98f;font-size:20px;margin:0 2px;vertical-align:middle;}
   @media(max-width:720px){.glsm{height:28px;}}
@@ -195,7 +195,7 @@ fetch("数据_glyphs.json").then(r=>r.json()).then(d=>{window.GLYPHS = d; if(typ
 <div class="wrap">
 
 <!-- 暂时隐藏，不展示：改回下面这行即可（去掉 style 与 data-hidden）--><section style="display:none" data-hidden="暂不展示">
-  <h2><span class="no">1</span>我在做什么</h2>
+  <h2>我在做什么</h2>
   <p class="lead">三句话说明白</p>
   <div class="grid">
     <div class="card"><h4>📖 逐页整理原书</h4><p>以 1984 年《彝汉简明词典》的电子词库为正文底本，逐条核对条目结构：字头、读音、释义、词组原样保留，并按原书顺序排成 328 页的翻页浏览，随时可翻回原页对照。</p></div>
@@ -205,7 +205,7 @@ fetch("数据_glyphs.json").then(r=>r.json()).then(d=>{window.GLYPHS = d; if(typ
 </section>
 
 <!-- 暂时隐藏，不展示：改回下面这行即可（去掉 style 与 data-hidden）--><section style="display:none" data-hidden="暂不展示">
-  <h2><span class="no">2</span>整理出来的成果</h2>
+  <h2>整理出来的成果</h2>
   <p class="lead">词典正文逐条取自《彝汉简明词典》；另并入了其它资料中词典未收的词组，按字头归入、以分隔线区分</p>
   <div class="two">
     <div class="figure">
@@ -218,7 +218,7 @@ fetch("数据_glyphs.json").then(r=>r.json()).then(d=>{window.GLYPHS = d; if(typ
 </section>
 
 <!-- 暂时隐藏，不展示：改回下面这行即可（去掉 style 与 data-hidden）--><section style="display:none" data-hidden="暂不展示">
-  <h2><span class="no">3</span>这样查</h2>
+  <h2>这样查</h2>
   <p class="lead">可查 9,727 条词条（彝文 / 国际音标 / 汉字释义）与 67,141 条其它资料的相关词组，也可查 1,051 个字头（彝文 / 音标 / 原书页码），并可按原书页码翻页浏览</p>
   <div class="searchbar">
     <input id="q" placeholder="试试：毕摩 · pʰi+ · 页 2 · XX012 · pɛ · 铃子" autocomplete="off">
@@ -234,10 +234,11 @@ fetch("数据_glyphs.json").then(r=>r.json()).then(d=>{window.GLYPHS = d; if(typ
   <div class="detail" id="detail"></div>
 </section>
 
-<section class="alt">
-  <h2><span class="no">4</span>字头家族</h2>
+<section class="alt"><div class="wrap">
+  <h2>字头家族</h2>
   <p class="lead">全书 174 组<b style="color:var(--red-d)">主字与异体字</b>关系 —— 同一个字在原书中有不同书写形式，系统保留主字与异体写法之间的对应</p>
   <div class="familygrid" id="famgrid"></div>
+</div>
 </section>
 
 </div>
