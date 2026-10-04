@@ -74,6 +74,23 @@ canvas{max-width:100%;border-radius:10px;border:1px solid #1d3d31;margin-top:8px
 .barin button.act{background:#f7be00;color:#2a1e00;border-color:#f7be00;font-weight:600}
 .imgwrap{margin-top:8px}
 .imgwrap .row{margin:6px 0 0}
+/* 按音节浏览 */
+.lbl{font-size:12px;color:#5d7a6e;align-self:center}
+.blbl{font-size:12.5px;color:#5fd7b4;margin:8px 2px 2px;font-weight:600}
+.chips2{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
+.chips2 button{font:12.5px inherit;padding:4px 11px;border-radius:14px;border:1px solid #2b5a49;background:#12241e;color:#9dc7b7}
+.chips2 button.on{background:#5fd7b4;color:#06231a;border-color:#5fd7b4;font-weight:600}
+.sandhi{font-size:12.5px;color:#5fd7b4;font-weight:600;margin:10px 2px 4px;letter-spacing:.5px}
+.sandhi span{color:#5d7a6e;font-weight:400;margin-left:6px}
+.mrow{padding:6px 10px;margin-bottom:5px;gap:10px;align-items:center}
+.mg{font-family:'Yi';font-size:30px;line-height:1.1;min-width:44px;text-align:center;color:#fff}
+.mm{flex:1;min-width:0;font-size:12.5px;color:#a8bdb4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mm b{color:#f7be00;font-size:14px;margin-right:6px}
+.plus{color:#f7be00;font-size:19px;font-weight:700;padding:0 2px}
+.pg2{display:flex;gap:8px;align-items:center;justify-content:center;margin:12px 0 4px}
+.pg2 button{font:13px inherit;padding:7px 14px;border-radius:9px;border:1px solid #24503f;background:#12241e;color:#cfe0d8}
+.pg2 span{font-size:12.5px;color:#9dc7b7}
+select{font:13.5px inherit;padding:7px 10px;border-radius:9px;border:1px solid #24503f;background:#12241e;color:#cfe0d8}
 </style></head><body><div class="wrap">
 <h1>撒尼彝文工具</h1>
 <div class="sub">1,051 字头 · 8,676 词组例句 · 查字 / 输入 / 词典 · 离线可用</div>
@@ -100,8 +117,9 @@ canvas{max-width:100%;border-radius:10px;border:1px solid #1d3d31;margin-top:8px
 </div>
 
 <div id="p0">
-  <input id="q" placeholder="音码 bi ／ 汉字 盖、天、毕摩 ／ 音标 pi⁵⁵ ／ 页码 12" autocomplete="off" autocapitalize="off" spellcheck="false">
-  <div class="row">
+  <input id="q" placeholder="音码 bi ／ 汉字 盖、毕摩 ／ 页码 12　（留空＝按音节浏览）" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <div class="row" id="tonerow">
+    <span class="lbl">按声调</span>
     <button class="on" onclick="setTone(this,null)">全部</button>
     <button onclick="setTone(this,'t')">高平 t</button>
     <button onclick="setTone(this,'n')">中平</button>
@@ -131,7 +149,8 @@ canvas{max-width:100%;border-radius:10px;border:1px solid #1d3d31;margin-top:8px
 
 <div id="p2" class="hide">
   <div class="hint">按原书页码顺序浏览，共 <b id="npages"></b> 页（该页的字头与词组都在）</div>
-  <div class="pager"><button onclick="page(-1)">◀ 上页</button><span id="pglab" style="font-size:13px;color:#9dc7b7"></span><button onclick="page(1)">下页 ▶</button></div>
+  <div class="pager"><button onclick="page(-1)">◀ 上页</button><select id="pgsel" onchange="jumpTo(this.value)"></select><button onclick="page(1)">下页 ▶</button></div>
+  <div class="hint" id="pglab"></div>
   <div id="list3"></div>
 </div>
 
@@ -154,10 +173,17 @@ W.forEach((w,ix)=>{w.m.forEach(v=>{v=String(v).split('（')[0].split('(')[0].tri
 const pages=[...new Set(H.map(h=>h.p))].sort((a,b)=>a-b);
 $('#npages').textContent=pages.length;
 
+function setGuideTxt(){
+  const h=$('#guide').classList.contains('hide');
+  $('#gtog').textContent = h ? '📖 怎么用？（点这里展开）' : '收起使用说明 ▲';
+}
 function tgGuide(){
   const g=$('#guide'); g.classList.toggle('hide');
-  $('#gtog').textContent = g.classList.contains('hide') ? '展开使用说明 ▼' : '收起使用说明 ▲';
+  try{localStorage.setItem('saniGuideHide', g.classList.contains('hide')?'1':'0')}catch(e){}
+  setGuideTxt();
 }
+try{ if(localStorage.getItem('saniGuideHide')==='1') $('#guide').classList.add('hide') }catch(e){}
+setGuideTxt();
 
 /* ---------- 卡片 ---------- */
 function headCard(h, ctx){
@@ -243,7 +269,8 @@ function delOne(){const d=$('#draft');d.value=d.value.slice(0,-1)}
 function render(){
   const raw=$('#q').value.trim(), list=$('#list'), n=$('#n');
   list.innerHTML='';
-  if(!raw){n.textContent='输入音码（bi）、汉字（盖/毕摩）、音标（pi）或页码（12）';return}
+  $('#tonerow').classList.remove('hide');
+  if(!raw){renderBrowse();return}
   let hs=[], ws=[], how='';
   if(/^[0-9]+$/.test(raw)){
     hs=H.filter(h=>String(h.p)===raw); ws=W.filter(w=>String(w.p)===raw); how='原书第 '+raw+' 页';
@@ -268,6 +295,45 @@ function render(){
 }
 function setTone(btn,v){toneF=v;[...btn.parentNode.children].forEach(b=>b.classList.remove('on'));btn.classList.add('on');render()}
 $('#q').addEventListener('input',render);
+/* ---------- 按声母/音节浏览全部字头 ---------- */
+const ONSETS='bcdfghjklmnpqrstwxyz'.split('');
+let bOnset=null, bPage=0;
+function browseIdx(){
+  let ix=H.map((h,i)=>i).filter(i=>H[i].z);
+  if(bOnset)ix=ix.filter(i=>H[i].z[0]===bOnset);
+  ix.sort((a,b)=>H[a].z<H[b].z?-1:(H[a].z>H[b].z?1:(+H[a].p-+H[b].p)));
+  return ix;
+}
+function renderBrowse(){
+  const list=$('#list'), n=$('#n');
+  const all=H.filter(h=>h.z);
+  $('#tonerow').classList.add('hide');
+  n.textContent='不知道音码？按声母/音节翻 —— 共 '+all.length+' 个字头，点一行就加进输出区';
+  const cnt={},cntZ={};all.forEach(h=>{cnt[h.z[0]]=(cnt[h.z[0]]||0)+1;cntZ[h.z]=(cntZ[h.z]||0)+1});
+  let html='<div class="blbl">按声母浏览</div><div class="chips2"><button class="'+(bOnset?'':'on')+'" onclick="pickOnset(null)">全部 '+all.length+'</button>';
+  ONSETS.forEach(k=>{if(cnt[k])html+='<button class="'+(bOnset===k?'on':'')+'" onclick="pickOnset(\''+k+'\')">'+k+' '+cnt[k]+'</button>'});
+  list.innerHTML='';
+  const chips=document.createElement('div');chips.innerHTML=html;while(chips.firstChild)list.appendChild(chips.firstChild);
+  const ix=browseIdx(), per=60, tot=Math.max(1,Math.ceil(ix.length/per));
+  bPage=Math.min(bPage,tot-1);
+  const slice=ix.slice(bPage*per,(bPage+1)*per);
+  let prev=null;
+  slice.forEach(i=>{
+    const h=H[i];
+    if(h.z!==prev){const sh=document.createElement('div');sh.className='sandhi';
+      sh.innerHTML=h.z+'<span>'+(cntZ[h.z]||1)+' 字</span>';list.appendChild(sh);prev=h.z}
+    const el=document.createElement('div');
+    el.className='card pick mrow';el.dataset.k='h';el.dataset.i=i;el.dataset.act='add';
+    el.innerHTML='<div class="mg">'+h.y+'</div><div class="mm"><b>'+h.z+'</b>'+esc(h.m.join(' / ').slice(0,28))+'</div><span class="plus">＋</span>';
+    list.appendChild(el);
+  });
+  const pg=document.createElement('div');pg.className='pg2';
+  pg.innerHTML='<button onclick="bgo(-1)">◀ 上一批</button><span>第 '+(bPage+1)+'/'+tot+' 批</span><button onclick="bgo(1)">下一批 ▶</button>';
+  list.appendChild(pg);
+}
+function pickOnset(k){bOnset=k;bPage=0;renderBrowse()}
+function bgo(d){bPage+=d;if(bPage<0)bPage=0;renderBrowse();window.scrollTo(0,0)}
+
 /* ---------- 输入 ---------- */
 function render2(){
   const raw=$('#q2').value.trim(),list=$('#list2'),n=$('#n2');
@@ -284,8 +350,15 @@ function render2(){
 }
 $('#q2').addEventListener('input',render2);
 /* ---------- 词典 ---------- */
+function fillPgSel(){
+  const s=$('#pgsel');
+  s.innerHTML=pages.map(p=>'<option value="'+p+'">原书第 '+p+' 页</option>').join('');
+}
+function jumpTo(v){const i=pages.indexOf(+v);if(i>=0){curPage=i;render3();window.scrollTo(0,0)}}
 function render3(){
-  $('#pglab').textContent='原词典第 '+pages[curPage]+' 页（'+(curPage+1)+'/'+pages.length+'）';
+  if(!$('#pgsel').options.length)fillPgSel();
+  $('#pgsel').value=pages[curPage];
+  $('#pglab').textContent='原词典第 '+pages[curPage]+' 页（第 '+(curPage+1)+' / '+pages.length+' 页）';
   const l=$('#list3');l.innerHTML='';
   H.forEach(h=>{if(h.p===pages[curPage])l.appendChild(headCard(h,'dict'))});
   W.forEach(w=>{if(w.p===pages[curPage])l.appendChild(wordCard(w,'dict'))});
@@ -294,7 +367,9 @@ function page(d){curPage=Math.min(pages.length-1,Math.max(0,curPage+d));render3(
 /* ---------- 通用 ---------- */
 function tab(i){
   for(let k=0;k<3;k++){$('#p'+k).classList.toggle('hide',k!==i);$('#t'+k).classList.toggle('on',k===i)}
-  if(i===0)render();if(i===1)render2();if(i===2)render3();
+  if(i===0){if(!$('#q').value.trim())renderBrowse();else render()}
+  if(i===1)render2();
+  if(i===2)render3();
   renderBar();
   window.scrollTo(0,0);
 }
