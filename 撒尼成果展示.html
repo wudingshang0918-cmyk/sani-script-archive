@@ -306,13 +306,7 @@ function showLocal(sn){
   d.classList.add("on"); d.scrollIntoView({behavior:"smooth"});
 }
 
-/* 家族网格 */
-document.getElementById("famgrid").innerHTML=F.slice(0,60).map(f=>
-  `<div class="fcell" onclick="showRef('${f.main.id}')" title="${esc(f.main.name)}">
-     <div class="fm">${yiH(f.main.pua)}</div>
-     <div class="fv">${f.variants.slice(0,4).map(v=>"◌").join("")||""}</div>
-     <div class="fi">${esc(f.main.ipa)} · +${f.variants.length}异体</div></div>`).join("")
-  + `<div style="grid-column:1/-1;text-align:center;color:#a39675;font-size:12.5px;padding-top:6px">共 ${F.length} 组 · 以上显示 60 组（点击任意一组查看主字与异体）</div>`;
+/* 家族网格：本页没有 #famgrid 容器（家族网格在首页 index.html），此段为旧稿残留，已移除以免脚本报错 */
 
 /* 事件 */
 document.getElementById("q").addEventListener("input",render);

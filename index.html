@@ -159,6 +159,20 @@
   .glsm{height:36px;margin:1px 2px;vertical-align:middle;}
   .altsep{color:#c9b98f;font-size:20px;margin:0 2px;vertical-align:middle;}
   @media(max-width:720px){.glsm{height:28px;}}
+/* 字头家族：就地展开 + 显示全部 */
+/* 字头家族：就地展开 + 显示全部 */
+.famtool{margin:0 0 12px}
+.famtool input{width:100%;max-width:360px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font:inherit;font-size:13px;background:#fff;outline:none;color:#444}
+.famtool input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(191,155,74,.12)}
+.fcell.on{border-color:var(--gold);background:#fff9ec;box-shadow:0 0 0 2px rgba(191,155,74,.16)}
+.famopen{background:#fdfaf1;border:1px solid var(--gold);border-radius:12px;padding:12px 16px}
+.fohead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:#5a4a2a}
+.fox{cursor:pointer;color:#a39675;font-size:12px;background:#fff;border:1px solid #eee3c9;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.fox:hover{color:var(--red-d);border-color:var(--gold)}
+.famopen .vrows{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:10px}
+.famfoot{grid-column:1/-1;text-align:center;color:#a39675;font-size:12.5px;padding-top:10px;line-height:2}
+.fambtn{cursor:pointer;font:inherit;font-size:12.5px;color:var(--red-d);background:#fff;border:1px solid var(--gold);border-radius:999px;padding:3px 14px;margin:0 2px}
+.fambtn:hover{background:#fff6e3}
 </style>
 <script>
 window.GLYPHS = {};
@@ -237,6 +251,7 @@ fetch("数据_glyphs.json").then(r=>r.json()).then(d=>{window.GLYPHS = d; if(typ
 <section class="alt"><div class="wrap">
   <h2>字头家族</h2>
   <p class="lead">全书 174 组<b style="color:var(--red-d)">主字与异体字</b>关系 —— 同一个字在原书中有不同书写形式，系统保留主字与异体写法之间的对应</p>
+  <div class="famtool"><input id="famq" placeholder="按音码 / 编号 / 名称筛选，例：pu、XX030、MOP"></div>
   <div class="familygrid" id="famgrid"></div>
 </div>
 </section>
@@ -389,13 +404,78 @@ function showLocal(sn){
   d.classList.add("on"); d.scrollIntoView({behavior:"smooth"});
 }
 
-/* 家族网格 */
-document.getElementById("famgrid").innerHTML=F.slice(0,60).map(f=>
-  `<div class="fcell" onclick="showRef('${f.main.id}')" title="${esc(f.main.name)}">
-     <div class="fm">${yiH(f.main.pua)}</div>
-     <div class="fv">${f.variants.slice(0,4).map(v=>"◌").join("")||""}</div>
-     <div class="fi">${esc(f.main.ipa)} · +${f.variants.length}异体</div></div>`).join("")
-  + `<div style="grid-column:1/-1;text-align:center;color:#a39675;font-size:12.5px;padding-top:6px">共 ${F.length} 组 · 以上显示 60 组（点击任意一组查看主字与异体）</div>`;
+/* 家族网格：174 组全部在页面里，默认显示 60，可一键显示全部；点一组就地展开主字与异体 */
+var famShown = 60;
+
+function famCard(f){
+  return '<div class="fcell" id="fc_' + f.main.id + '" onclick="toggleFam(\'' + f.main.id + '\')" title="' + esc(f.main.name) + '">'
+    + '<div class="fm">' + yiH(f.main.pua) + '</div>'
+    + '<div class="fv">' + f.variants.slice(0,4).map(function(){return '◌';}).join('') + '</div>'
+    + '<div class="fi">' + esc(f.main.ipa) + ' · +' + f.variants.length + '异体</div></div>';
+}
+
+function famPanelHtml(f){
+  var r = R[RID2I[f.main.id]] || {};
+  var all = [f.main].concat(f.variants);
+  var cards = all.map(function(m,i){
+    var mr = R[RID2I[m.id]] || {};
+    return '<div class="vcard"><div class="v">' + yiH(m.pua) + '</div>'
+      + '<div class="vi">' + m.id + (i === 0 ? ' · 主字' : ' · 异体' + i) + '</div>'
+      + '<div class="vi">' + esc(m.ipa || mr.ipa || '') + (mr.page ? ' · 第' + mr.page + '页' : '') + '</div></div>';
+  }).join('');
+  return '<div class="famopen" id="fo_' + f.main.id + '" style="grid-column:1/-1">'
+    + '<div class="fohead"><span><b>' + esc(f.main.ipa) + '</b> ｜ 主字 ' + f.main.id
+      + (r.page ? ' ｜ 原书第 ' + r.page + ' 页' : '') + ' ｜ ' + esc(f.main.name)
+      + ' ｜ 同组共 ' + all.length + ' 个字形</span>'
+      + '<span class="fox" onclick="toggleFam(\'' + f.main.id + '\',1)">收起 ✕</span></div>'
+    + '<div class="vrows">' + cards + '</div></div>';
+}
+
+function toggleFam(id, close){
+  var grid = document.getElementById('famgrid');
+  if(!grid) return;
+  var old = grid.querySelector('.famopen');
+  var same = old && old.id === 'fo_' + id;
+  if(old) old.parentNode.removeChild(old);
+  grid.querySelectorAll('.fcell.on').forEach(function(c){c.classList.remove('on');});
+  if(close || same) return;
+  var f = F.filter(function(x){return x.main.id === id;})[0];
+  var cell = document.getElementById('fc_' + id);
+  if(!f || !cell) return;
+  cell.classList.add('on');
+  cell.insertAdjacentHTML('afterend', famPanelHtml(f));
+  var p = document.getElementById('fo_' + id);
+  if(p && p.getBoundingClientRect().top > window.innerHeight * 0.85) p.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function renderFams(){
+  var grid = document.getElementById('famgrid');
+  if(!grid) return;
+  var qi = document.getElementById('famq');
+  var q = (qi ? qi.value : '').trim().toLowerCase();
+  var list = F;
+  if(q){
+    list = F.filter(function(f){
+      var hay = ([f.main.id, f.main.ipa, f.main.name].concat(f.variants.map(function(v){return v.id;}))).join(' ').toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+  }
+  var show = list.slice(0, famShown);
+  var h = show.map(famCard).join('');
+  if(!list.length) h = '<div style="grid-column:1/-1;text-align:center;color:#b9ab8a;padding:16px">没有匹配的家族 —— 试试 pu / pʰu / XX030 / MOP</div>';
+  h += '<div class="famfoot">共 ' + F.length + ' 组' + (q ? ' · 匹配 ' + list.length + ' 组' : '') + ' · 当前显示 ' + Math.min(famShown, list.length) + ' 组　'
+    + (q ? '' : (list.length > famShown
+        ? '<button class="fambtn" onclick="famShown=9999;renderFams()">显示全部 ' + list.length + ' 组 ▾</button>'
+        : '<button class="fambtn" onclick="famShown=60;renderFams()">收起到 60 组 ▴</button>'))
+    + '　<span style="color:#b9ab8a">点任意一组，主字与异体就展开在它下面</span></div>';
+  grid.innerHTML = h;
+}
+
+renderFams();
+(function(){
+  var qi = document.getElementById('famq');
+  if(qi) qi.addEventListener('input', function(){ famShown = qi.value.trim() ? 9999 : 60; renderFams(); });
+})();
 
 /* 事件 */
 document.getElementById("q").addEventListener("input",render);
