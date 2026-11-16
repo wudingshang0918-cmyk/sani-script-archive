@@ -41,7 +41,18 @@ select{padding:9px 11px;font-size:14px;border:1px solid #cfd6d3;border-radius:8p
 .tag{position:absolute;font-size:9px;color:#c19a4a}
 .empty{color:#9aa3a0;padding:40px;text-align:center}
 @media(max-width:720px){.ipa{font-size:16px}.wrap{padding:10px 12px 40px}.onsets{padding:8px 12px 4px}.bar{padding:9px 12px}}
-</style></head><body>
+</style><style id="hx-home-css">
+.hx-home{display:flex;align-items:center;gap:6px;position:sticky;top:0;z-index:99999;
+  background:rgba(251,246,236,.97);border-bottom:1px solid #E0D3B8;color:#7A1212;text-decoration:none;
+  font:600 13.5px/1 "Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  padding:calc(11px + env(safe-area-inset-top,0px)) 16px 11px;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:0 1px 6px rgba(122,18,18,.06);letter-spacing:.5px}
+.hx-home:hover,.hx-home:active{background:#F5EBD8}
+.hx-home .hx-arw{font-size:15px;line-height:1}
+.hx-home .hx-sub{margin-left:auto;font-weight:400;font-size:12px;color:#a39675}
+@media print{.hx-home{display:none}}
+</style></head><body><a class="hx-home" href="index.html" aria-label="返回首页"><span class="hx-arw">←</span> 返回首页<span class="hx-sub">石林撒尼彝语数字资料整理</span></a>
 <nav class="topnav"><div class="wrap2">
   <a href="彝汉简明词典_词典版_含其它资料.html">📚 词库完整版</a>
   <a href="zitou.html" style="color:#fff;border-bottom:3px solid #F7BE00">🔤 字头音节表</a>

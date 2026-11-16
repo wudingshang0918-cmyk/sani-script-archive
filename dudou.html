@@ -31,7 +31,18 @@ button{padding:11px 15px;background:var(--accent);color:#fff;border:0;border-rad
 img.subimg{width:100%;border-radius:7px;border:1px solid var(--line);display:block}
 .count{font-size:12.5px;color:#888;margin:8px 0}
 .note{background:#fff;border-left:3px solid var(--accent);padding:9px 12px;font-size:12.5px;color:#666;border-radius:6px;margin:8px 0}
-</style></head><body>
+</style><style id="hx-home-css">
+.hx-home{display:flex;align-items:center;gap:6px;position:sticky;top:0;z-index:99999;
+  background:rgba(251,246,236,.97);border-bottom:1px solid #E0D3B8;color:#7A1212;text-decoration:none;
+  font:600 13.5px/1 "Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  padding:calc(11px + env(safe-area-inset-top,0px)) 16px 11px;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:0 1px 6px rgba(122,18,18,.06);letter-spacing:.5px}
+.hx-home:hover,.hx-home:active{background:#F5EBD8}
+.hx-home .hx-arw{font-size:15px;line-height:1}
+.hx-home .hx-sub{margin-left:auto;font-weight:400;font-size:12px;color:#a39675}
+@media print{.hx-home{display:none}}
+</style></head><body><a class="hx-home" href="index.html" aria-label="返回首页"><span class="hx-arw">←</span> 返回首页<span class="hx-sub">石林撒尼彝语数字资料整理</span></a>
 <header>
   <h1>石林撒尼口语 400 句 · 点读</h1>
   <div class="sub2">汉语句 / 撒尼语读音 / 官方彝文字幕 / 直译 / 注音 · 点击播放录音</div>
