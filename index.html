@@ -159,8 +159,7 @@
   .glsm{height:36px;margin:1px 2px;vertical-align:middle;}
   .altsep{color:#c9b98f;font-size:20px;margin:0 2px;vertical-align:middle;}
   @media(max-width:720px){.glsm{height:28px;}}
-/* 字头家族：就地展开 + 显示全部 */
-/* 字头家族：就地展开 + 显示全部 */
+/* 异体字字体家族：就地展开 + 显示全部 */
 .famtool{margin:0 0 12px}
 .famtool input{width:100%;max-width:360px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font:inherit;font-size:13px;background:#fff;outline:none;color:#444}
 .famtool input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(191,155,74,.12)}
@@ -249,7 +248,7 @@ fetch("数据_glyphs.json").then(r=>r.json()).then(d=>{window.GLYPHS = d; if(typ
 </section>
 
 <section class="alt"><div class="wrap">
-  <h2>字头家族</h2>
+  <h2>异体字字体家族</h2>
   <p class="lead">全书 174 组<b style="color:var(--red-d)">主字与异体字</b>关系 —— 同一个字在原书中有不同书写形式，系统保留主字与异体写法之间的对应</p>
   <div class="famtool"><input id="famq" placeholder="按音码 / 编号 / 名称筛选，例：pu、XX030、MOP"></div>
   <div class="familygrid" id="famgrid"></div>
