@@ -127,12 +127,12 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-
   /* 品牌行：压在视频顶部，字号收小 */
   .topline{position:absolute;top:16px;left:16px;gap:11px;align-items:flex-start}
   .mark{width:40px;height:40px;border-radius:12px;font-size:20px}
-  .topline .name{font-size:17px;line-height:1.25;letter-spacing:.01em}
-  .topline .en{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;margin-top:4px;color:rgba(243,245,244,.72)}
+  .topline .name{font-size:17px;line-height:1.25;letter-spacing:.01em;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+  .topline .en{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;margin-top:5px;color:rgba(243,245,244,.86);text-shadow:0 1px 6px rgba(0,0,0,.85)}
 
   /* 卡片列：回到正常文档流，负 margin 让第一张压住视频底边 */
   .rail{position:relative;top:auto;right:auto;width:auto;height:auto;
-    padding:0 14px;margin-top:-26px;gap:10px;overflow:visible}
+    padding:0 14px;margin-top:-26px;gap:12px;overflow:visible}
   .rail::before{display:none}
   .card{border-radius:18px;padding:14px 15px 15px;
     backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7)}
