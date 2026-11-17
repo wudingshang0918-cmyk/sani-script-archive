@@ -172,10 +172,23 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-
 
 <main class="screen">
   <div class="media">
-    <video autoplay muted loop playsinline preload="metadata" poster="assets/hero_poster.jpg">
-      <source src="assets/hero_final.webm" type="video/webm">
-      <source src="assets/hero_final_web.mp4" type="video/mp4">
-    </video>
+    <video id="hero-v" autoplay muted loop playsinline preload="metadata" poster="assets/hero_poster.jpg"></video>
+    <script>
+    (function(){
+      var v = document.getElementById('hero-v');
+      var m = window.matchMedia('(max-width:900px)').matches;
+      v.poster = m ? 'assets/hero_poster_m.jpg' : 'assets/hero_poster.jpg';
+      var list = m
+        ? [['assets/hero_m.mp4','video/mp4'], ['assets/hero_m.webm','video/webm']]
+        : [['assets/hero_d.mp4','video/mp4'], ['assets/hero_d.webm','video/webm']];
+      for (var i = 0; i < list.length; i++) {
+        var s = document.createElement('source');
+        s.src = list[i][0]; s.type = list[i][1];
+        v.appendChild(s);
+      }
+      v.load();
+    })();
+    </script>
   </div>
 
   <div class="topline">
