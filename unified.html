@@ -34,7 +34,44 @@ button{padding:13px 22px;background:var(--accent);color:#fff;border:0;border-rad
 .stats b{color:var(--accent)}
 nav a{color:#fff;text-decoration:none;opacity:.85;font-size:13px;margin-right:14px}
 nav a:hover{opacity:1;text-decoration:underline}
-</style></head><body>
+</style>
+
+<style id="hx-dark">
+/* hx-dark：由新首页统一皮肤注入，仅改观感，不动结构与脚本 */
+:root{
+  --bg:#0A0C0D; --fg:#F3F5F4; --accent:#C1492F; --line:rgba(255,255,255,.16); --card:#14181A;
+  --ink:#F3F5F4; --ink2:rgba(243,245,244,.76); --ink3:rgba(243,245,244,.56);
+}
+html,body{background:#0A0C0D !important;color:#F3F5F4 !important}
+body{font-family:"PingFang SC","Microsoft YaHei",-apple-system,system-ui,sans-serif}
+/* 顶栏 / 头部 / 工具条 */
+header,.bar,.nav,.topbar,.hx-home,.stat,.srcnote,.wrap>header{background-color:#0D1113 !important;color:#F3F5F4 !important;border-color:rgba(255,255,255,.14) !important}
+h1,h2,h3,h4,h5,strong,b{color:#F3F5F4 !important}
+p,span,li,dd,dt,small,label,.sub,.stat,.srcnote,.sep{color:rgba(243,245,244,.76) !important}
+a{color:#E07352 !important}
+/* 输入与按钮 */
+input,select,textarea,button{
+  background:#161B1D !important;color:#F3F5F4 !important;
+  border:1px solid rgba(255,255,255,.18) !important;border-radius:10px !important}
+input::placeholder,textarea::placeholder{color:rgba(243,245,244,.42) !important}
+button:hover,input[type=submit]:hover{background:#1E2426 !important}
+/* 卡片 / 列表行 */
+.card,.item,.row,.entry,.cell,.box,.panel,.pane,.result,.results>div,.famopen,.vcard,
+.g,.rel,.gsub,.entrybox,.wordbox{
+  background:#14181A !important;border-color:rgba(255,255,255,.14) !important;color:#F3F5F4 !important}
+hr,.sep{border-color:rgba(255,255,255,.12) !important}
+.stats,.stats>div,.summary,.meta,.toolbar,.chips,.controls{background:#14181A !important;border-color:rgba(255,255,255,.14) !important;color:#F3F5F4 !important}
+/* 表格 */
+table,thead,tbody,tr,td,th{background:transparent !important;color:#F3F5F4 !important;border-color:rgba(255,255,255,.12) !important}
+/* 滚动条 */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* 统一检索：首页大标题区与结果卡 */
+.hero,.head,.searchbar{background:#0D1113 !important}
+</style>
+</head><body>
 <header>
   <h1>石林撒尼语数字资料库</h1>
   <div class="sub">统一检索 · 词典 × 口语400句 × 分类词表</div>

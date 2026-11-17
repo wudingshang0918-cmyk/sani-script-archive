@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>统一检索 · 石林撒尼彝语数字资料整理</title>
+<link rel="stylesheet" href="assets/subpage.css">
+<style>
+.appbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.appbar a{text-decoration:none;color:var(--ink-2);font-size:12.5px;border:1px solid var(--line);
+  border-radius:999px;padding:7px 13px}
+.appbar a:hover{color:var(--ink);border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.06)}
+.appbar a.on{background:rgba(193,73,47,.3);border-color:rgba(193,73,47,.9);color:#fff;font-weight:600}
+.frame{border:1px solid rgba(255,255,255,.16);border-radius:var(--r-card);overflow:hidden;
+  background:#0A0C0D;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.frame iframe{width:100%;height:calc(100dvh - 300px);min-height:480px;border:0;display:block;background:#fff}
+.hint{margin-top:10px;font-size:11.5px;color:var(--ink-3)}
+.hint a{color:var(--accent);text-decoration:none}
+@media (max-width:820px){.frame iframe{height:calc(100dvh - 210px);min-height:440px}}
+</style>
+</head>
+<body>
+<div class="sp-top">
+  <a class="sp-back" href="index.html">← 首页</a>
+  <span class="sp-title">统一检索</span>
+  <span class="sp-stat">1,051 字头 · 9,727 词条</span>
+</div>
+
+<div class="sp-wrap">
+  <div class="sp-head" style="margin-bottom:12px">
+    <h1 style="font-size:clamp(19px,1.8vw,24px)">一个框，查遍字头、词条与例句</h1>
+    <p style="font-size:12.5px">音码、汉字、页码、彝文字形都能搜。1,051 个字头 / 9,727 个词条 / 8,676 个词组例句，全在一个检索框里。</p>
+  </div>
+
+  <div class="sp-figure" style="min-height:0;height:76px;margin-bottom:12px;border-radius:16px"><div class="ph" style="padding:0 20px;text-align:left;display:flex;align-items:center;gap:10px"><b style="margin:0">图片位 · 待提供</b><span>横图 3:1，放词典翻页 / 检索界面实拍都行</span></div></div>
+
+  <div class="appbar"><a href="统一检索.html" class="on">统一检索</a><a href="词库完整版.html">词库完整版</a><a href="字头音节表.html">字头音节表</a><a href="口语400句.html">口语 400 句</a><a href="异体字家族.html">异体字家族</a><a href="彝文工具.html">彝文工具</a></div>
+
+  <div class="frame"><iframe src="unified.html" title="统一检索" loading="lazy"></iframe></div>
+  <div class="hint">内核沿用原来的检索程序，外面换成了新的页头与边框；数据与交互没有改动。窗口太小就 <a href="unified.html" target="_blank">单独打开</a>。</div>
+</div>
+</body>
+</html>
